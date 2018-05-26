@@ -72,3 +72,65 @@ bool alphabet(string alpha) {
 	}
 	return side;
 }
+
+void Entry() {
+	string buffer;
+	cout << "First Name: ";
+
+	cin >> buffer;
+
+	newNode = NULL;
+	bcurrent = bhome;
+	current = home;
+
+	bool currentMove = false;
+
+	while (current != NULL) {
+		if (alphabet(buffer)) {
+			bcurrent = current;
+			current = current->left;
+			currentMove = true;
+		}
+		else {
+			bcurrent = current;
+			current = current->left;
+			currentMove = false;
+		}
+	}
+	if (currentMove) {
+		bcurrent->left = new node;
+		current = bcurrent->left;
+	}
+	else {
+		bcurrent->right = new node;
+		current = bcurrent->right;
+	}
+	current->input.firstName = buffer;
+
+	//cout << "Middle Initial: ";
+	//cin >> current->input.middleInt;
+
+	cout << "Last Name: ";
+	cin >> current->input.lastName;
+
+	cout << "Phone Number: ";
+	cin >> current->input.phoneNumber;
+
+	//cout << "Day of Birth: ";
+	//cin >> current->input.DOB;
+
+	//cout << "Month of Birth: ";
+	//cin >> current->input.MOB;
+
+	//cout << "Year of Birth: ";
+	//cin >> current->input.YOB;
+
+	//cout << "Home Address: ";
+	//cin >> current->input.hAddress;
+
+	//cout << "Email Adress: ";
+	//cin >> current->input.eAddress;
+
+	//cout << "Occupation: ";
+	//cin >> current->input.occupation;
+}
