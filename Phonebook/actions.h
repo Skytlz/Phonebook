@@ -32,10 +32,11 @@ node* bhome = new node;
 node* home = new node;
 node* newNode = new node;
 
-void Entry(); //input to node;
 bool alphabet(); //Determine left or right.
+void Entry(); //input to node;
 void search(); //Search for name
 void printone(node*); //Prints one node.
 void printone(node*); //Prints entire tree.
 void deleteOne(string); //Deletes a node from the tree.
 void edit(string); //Edits one node. 
+
