@@ -134,3 +134,23 @@ void Entry() {
 	//cout << "Occupation: ";
 	//cin >> current->input.occupation;
 }
+
+void search() {
+
+}
+
+void printOne(node* output) {
+
+}
+
+void printAll(node* start) {
+
+}
+
+void deleteOne(string del) {
+
+}
+ 
+void edit(string change) {
+
+}
