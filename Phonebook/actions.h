@@ -140,11 +140,26 @@ void search(string name) {
 }
 
 void printOne(node* output) {
-
+	cout << output->input.firstName << endl;
+	//cout << output->input.middleINT << endl;
+	cout << output->input.lastName << endl;
+	cout << output->input.phoneNumber << endl;
+	//cout << output->input.DOB << endl;
+	//cout << output->input.MOB << endl;
+	//cout << output->input.YOB << endl;
+	//cout << output->input.hAddress << endl;
+	//cout << output->input.eAddress << endl;
+	//cout << output->input.occupation << endl;
 }
 
 void printAll(node* start) {
-
+	if (start->right != NULL) {
+		printAll(start->right);
+	}
+	printOne(start);
+	if (start->left != NULL) {
+		printAll(start -> left);
+	}
 }
 
 void deleteOne(string del) {
