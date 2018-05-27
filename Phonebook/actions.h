@@ -44,33 +44,29 @@ bool alphabet(string alpha) {
 	unsigned long alphaLength = alpha.length();
 	unsigned long firstNameLength = current->input.firstName.length();
 
-	bool side = false;
+	//bool side=false;
 
 	if (alphaLength >= firstNameLength) {
-		for (int i = 0; i < current->input.firstName.length(); i++) {
+		for (int i = 0; i < current->input.firstName.length()-1; i++) {
 			if (alpha.at(i) < current->input.firstName.at(i)) {
-				side = false;
-				break;
+				return false;
 			}
 			else if (alpha.at(i) > current->input.firstName.at(i)) {
-				side = true;
-				break;
+				return true;
 			}
 		}
 	}
 	else if (alphaLength < firstNameLength) {
-		for (int i = 0; i < alphaLength - 1; i++) {
+		for (int i = 0; i < alpha.length()-1; i++) {
 			if (alpha.at(i) > current->input.firstName.at(i)) {
-				side = true;
-				break;
+				return true;
 			}
 			else if (alpha.at(i) < current->input.firstName.at(i)) {
-				side = false;
-				break;
+				return false;
 			}
 		}
 	}
-	return side;
+	return true;
 }
 
 void Entry() {
@@ -78,25 +74,28 @@ void Entry() {
 	cout << "First Name: ";
 
 	cin >> buffer;
+	
 
 	newNode = NULL;
 	bcurrent = bhome;
 	current = home;
 
 	bool currentMove = false;
-
+	
 	while (current != NULL) {
-		if (alphabet(buffer)) {
+		if (alphabet(buffer)==true) {
 			bcurrent = current;
 			current = current->left;
 			currentMove = true;
-		}
-		else {
+			cout << "testL";
+		}else{
 			bcurrent = current;
-			current = current->left;
+			current = current->right;
 			currentMove = false;
+			cout << "testR";
 		}
 	}
+	
 	if (currentMove) {
 		bcurrent->left = new node;
 		current = bcurrent->left;
