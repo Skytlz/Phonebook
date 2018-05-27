@@ -24,7 +24,7 @@ struct entry {
 struct node {
 	entry input;
 	node* left;
-	node* right
+	node* right;
 };
 node* current;
 node* bcurrent;
@@ -34,7 +34,7 @@ node* newNode = new node;
 
 bool alphabet(string); //Determine left or right.
 void Entry(); //input to node;
-void search(); //Search for name
+void search(string); //Search for name
 void printone(node*); //Prints one node.
 void printone(node*); //Prints entire tree.
 void deleteOne(string); //Deletes a node from the tree.
@@ -135,7 +135,7 @@ void Entry() {
 	//cin >> current->input.occupation;
 }
 
-void search() {
+void search(string name) {
 
 }
 
