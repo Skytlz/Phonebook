@@ -41,32 +41,34 @@ void deleteOne(string); //Deletes a node from the tree.
 void edit(string); //Edits one node. 
 
 bool alphabet(string alpha) {
-	unsigned long alphaLength = alpha.length();
-	unsigned long firstNameLength = current->input.firstName.length();
+	int alphaLength = alpha.length();
+	int nameLength = current->input.firstName.length(); //So I don't have to type "current->input.firstName.length();" again and again.
 
-	//bool side=false;
-
-	if (alphaLength >= firstNameLength) {
-		for (int i = 0; i < current->input.firstName.length()-1; i++) {
-			if (alpha.at(i) < current->input.firstName.at(i)) {
-				return false;
-			}
-			else if (alpha.at(i) > current->input.firstName.at(i)) {
-				return true;
-			}
-		}
-	}
-	else if (alphaLength < firstNameLength) {
-		for (int i = 0; i < alpha.length()-1; i++) {
+	if (alphaLength < nameLength) {
+		for (int i = 0; i < alphaLength; i++) {
 			if (alpha.at(i) > current->input.firstName.at(i)) {
 				return true;
+				break;
 			}
 			else if (alpha.at(i) < current->input.firstName.at(i)) {
 				return false;
+				break;
 			}
 		}
 	}
-	return true;
+	else if (alphaLength >= nameLength) {
+		for (int i = 0; i < nameLength; i++) {
+			if (alpha.at(i) < current->input.firstName.at(i)) {
+				return false;
+				break;
+			}
+			else if (alpha.at(i) > current->input.firstName.at(i)) {
+				return true;
+				break;
+			}
+		}
+	}
+	return false;
 }
 
 void Entry() {
