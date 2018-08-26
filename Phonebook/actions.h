@@ -83,21 +83,23 @@ void Entry() {
 	current = home;
 
 	bool currentMove = false;
-	
+	cout << "enter the while" << endl;
 	while (current != NULL) {
-		if (alphabet(buffer)==true) {
+		if (alphabet(buffer)) {
 			bcurrent = current;
 			current = current->left;
 			currentMove = true;
-			cout << "testL";
+			cout << "testL" << endl;
+			break;
 		}else{
 			bcurrent = current;
 			current = current->right;
 			currentMove = false;
-			cout << "testR";
+			cout << "testR" << endl;
+			break;
 		}
 	}
-	
+	cout << "Exit the while" << endl;
 	if (currentMove) {
 		bcurrent->left = new node;
 		current = bcurrent->left;
@@ -155,11 +157,11 @@ void printOne(node* output) {
 
 void printAll(node* start) {
 	if (start->right != NULL) {
-		printAll(start->right);
+		printOne(start->right);
 	}
 	printOne(start);
 	if (start->left != NULL) {
-		printAll(start -> left);
+		printOne(start -> left);
 	}
 }
 
