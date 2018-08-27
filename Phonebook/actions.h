@@ -161,7 +161,7 @@ void printAll(node* start) {
 	}
 	printOne(start);
 	if (start->left != NULL) {
-		printOne(start -> left);
+		printOne(start->left);
 	}
 }
 
