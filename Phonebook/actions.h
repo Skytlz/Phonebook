@@ -83,7 +83,6 @@ void Entry() {
 	current = home;
 
 	bool currentMove = false;
-	cout << "enter the while" << endl;
 	while (current != NULL) {
 		if (alphabet(buffer)) {
 			bcurrent = current;
@@ -99,8 +98,7 @@ void Entry() {
 			break;
 		}
 	}
-	cout << "Exit the while" << endl;
-	if (currentMove) {
+		if (currentMove) {
 		bcurrent->left = new node;
 		current = bcurrent->left;
 	}
@@ -156,6 +154,16 @@ void printOne(node* output) {
 }
 
 void printAll(node* start) {
+	if (start == NULL) return;
+	
+	printAll(start->left); //Unhandled exception thrown: read access violation. **start** was 0xCDCDCDCD. occurred
+	printf("%d ", start->input);
+	printAll(start->right);
+
+}
+
+
+/*void printAll(node* start) {
 	if (start->right != NULL) {
 		printOne(start->right);
 	}
@@ -163,7 +171,7 @@ void printAll(node* start) {
 	if (start->left != NULL) {
 		printOne(start->left);
 	}
-}
+}*/
 
 void deleteOne(string del) {
 
