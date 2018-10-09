@@ -5,6 +5,7 @@
 #include <sstream>
 #include <fstream>
 #include <vector>
+#include <stdlib.h>
 
 using namespace std;
 
@@ -35,10 +36,10 @@ node* newNode = new node;
 bool alphabet(string); //Determine left or right.
 void Entry(); //input to node;
 void search(string); //Search for name
-void printone(node*); //Prints one node.
-void printone(node*); //Prints entire tree.
+void printAll (node*); //Prints entire tree.
 void deleteOne(string); //Deletes a node from the tree.
 void edit(string); //Edits one node. 
+
 
 bool alphabet(string alpha) {
 	int alphaLength = alpha.length();
@@ -73,7 +74,11 @@ bool alphabet(string alpha) {
 
 void Entry() {
 	string buffer;
+	ofstream outfile;
+	outfile.open("book.txt", ios::out | ios::app);
+
 	cout << "First Name: ";
+	
 
 	cin >> buffer;
 	
@@ -107,57 +112,57 @@ void Entry() {
 		current = bcurrent->right;
 	}
 	current->input.firstName = buffer;
+	outfile << current->input.firstName << "*";
 
 	//cout << "Middle Initial: ";
 	//cin >> current->input.middleInt;
+	//outfile << current->input.middleInt << "*";
 
 	cout << "Last Name: ";
 	cin >> current->input.lastName;
+	outfile << current->input.lastName << "*";
 
 	cout << "Phone Number: ";
 	cin >> current->input.phoneNumber;
+	outfile << current->input.phoneNumber << "*\n";
 
 	//cout << "Day of Birth: ";
 	//cin >> current->input.DOB;
+	//outfile << current->input.DOB << "*";
 
 	//cout << "Month of Birth: ";
 	//cin >> current->input.MOB;
+	//outfile << current->input.MOB << "*";
 
 	//cout << "Year of Birth: ";
 	//cin >> current->input.YOB;
+	//outfile << current->input.YOB << "*";
 
 	//cout << "Home Address: ";
 	//cin >> current->input.hAddress;
+	//outfile << current->input.hAddress << "*";
 
 	//cout << "Email Adress: ";
 	//cin >> current->input.eAddress;
+	//outfile << current->input.eAddress << "*";
 
 	//cout << "Occupation: ";
 	//cin >> current->input.occupation;
+	//outfile << current->input.occupation << "*\n";
+
+	outfile.close();
 }
 
 void search(string name) {
 
 }
 
-void printOne(node* output) {
-	cout << output->input.firstName << endl;
-	//cout << output->input.middleINT << endl;
-	cout << output->input.lastName << endl;
-	cout << output->input.phoneNumber << endl;
-	//cout << output->input.DOB << endl;
-	//cout << output->input.MOB << endl;
-	//cout << output->input.YOB << endl;
-	//cout << output->input.hAddress << endl;
-	//cout << output->input.eAddress << endl;
-	//cout << output->input.occupation << endl;
-}
-
-void printAll(node* start) {
+void printAll(struct node* start) {
 	if (start == NULL) return;
 	
+
 	printAll(start->left); //Unhandled exception thrown: read access violation. **start** was 0xCDCDCDCD. occurred
-	printf("%d ", start->input);
+	cout << start->input.firstName << endl;
 	printAll(start->right);
 
 }
