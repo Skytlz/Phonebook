@@ -25,7 +25,7 @@ struct entry {
 struct node {
 	entry input;
 	node* left;
-	node* right;
+    node* right;
 };
 node* current;
 node* bcurrent;
@@ -36,7 +36,7 @@ node* newNode = new node;
 bool alphabet(string); //Determine left or right.
 void Entry(); //input to node;
 void search(string); //Search for name
-void printAll (node*); //Prints entire tree.
+void printAll (struct node*); //Prints entire tree.
 void deleteOne(string); //Deletes a node from the tree.
 void edit(string); //Edits one node. 
 
@@ -157,13 +157,13 @@ void search(string name) {
 
 }
 
-void printAll(struct node* start) {
-	if (start == NULL) return;
+void printAll(struct node* node) {
+	if (node == NULL) return;
 	
 
-	printAll(start->left); //Unhandled exception thrown: read access violation. **start** was 0xCDCDCDCD. occurred
-	cout << start->input.firstName << endl;
-	printAll(start->right);
+	printAll(node->left); //Unhandled exception thrown: read access violation. **start** was 0xCDCDCDCD. occurred
+	cout << node->input.firstName << endl;
+	printAll(node->right);
 
 }
 
