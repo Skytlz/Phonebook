@@ -26,14 +26,12 @@ struct node {
 	entry input;
 	node* left;
     node* right;
-	node() : left(nullptr), right(nullptr) {}
 };
 node* current;
 node* bcurrent;
 node* bhome = new node;
 node* home = new node;
 node* newNode = new node;
-
 
 bool alphabet(string); //Determine left or right.
 void Entry(); //input to node;
@@ -159,13 +157,13 @@ void search(string name) {
 
 }
 
-void printAll(struct node* start) {
-	if (start == NULL) return;
+void printAll(struct node* node) {
+	if (node == NULL) return;
 	
 
-	printAll(start->left); 
-	cout << start->input.firstName << endl;
-	printAll(start->right);
+	printAll(node->left); //Unhandled exception thrown: read access violation. **start** was 0xCDCDCDCD. occurred
+	cout << node->input.firstName << endl;
+	printAll(node->right);
 
 }
 
