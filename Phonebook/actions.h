@@ -26,6 +26,7 @@ struct node {
 	entry input;
 	node* left;
     node* right;
+	node() : left(nullptr), right(nullptr) {}
 };
 node* current;
 node* bcurrent;
@@ -118,13 +119,14 @@ void Entry() {
 	//cin >> current->input.middleInt;
 	//outfile << current->input.middleInt << "*";
 
-	cout << "Last Name: ";
+	/*cout << "Last Name: ";
 	cin >> current->input.lastName;
 	outfile << current->input.lastName << "*";
 
 	cout << "Phone Number: ";
 	cin >> current->input.phoneNumber;
-	outfile << current->input.phoneNumber << "*\n";
+	outfile << current->input.phoneNumber << "*\n";*/
+
 
 	//cout << "Day of Birth: ";
 	//cin >> current->input.DOB;
@@ -161,7 +163,7 @@ void printAll(struct node* node) {
 	if (node == NULL) return;
 	
 
-	printAll(node->left); //Unhandled exception thrown: read access violation. **start** was 0xCDCDCDCD. occurred
+	printAll(node->left);
 	cout << node->input.firstName << endl;
 	printAll(node->right);
 
