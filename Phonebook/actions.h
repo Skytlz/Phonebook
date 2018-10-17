@@ -36,7 +36,7 @@ node* newNode = new node;
 
 bool alphabet(string); //Determine left or right.
 void Entry(); //input to node;
-void search(string); //Search for name
+bool search(struct node*, string); //Search for name
 void printAll (struct node*); //Prints entire tree.
 void deleteOne(string); //Deletes a node from the tree.
 void edit(string); //Edits one node. 
@@ -79,10 +79,7 @@ void Entry() {
 	outfile.open("book.txt", ios::out | ios::app);
 
 	cout << "First Name: ";
-	
-
 	cin >> buffer;
-	
 
 	newNode = NULL;
 	bcurrent = bhome;
@@ -119,13 +116,13 @@ void Entry() {
 	//cin >> current->input.middleInt;
 	//outfile << current->input.middleInt << "*";
 
-	/*cout << "Last Name: ";
+	cout << "Last Name: ";
 	cin >> current->input.lastName;
 	outfile << current->input.lastName << "*";
 
 	cout << "Phone Number: ";
 	cin >> current->input.phoneNumber;
-	outfile << current->input.phoneNumber << "*\n";*/
+	outfile << current->input.phoneNumber << "*\n";
 
 
 	//cout << "Day of Birth: ";
@@ -155,30 +152,16 @@ void Entry() {
 	outfile.close();
 }
 
-void search(string name) {
+bool search(struct node* start, string name) {
+	if (start == NULL) {
+		return "Not found";
+	}
+	else {
+		if (name == start->input.firstName) return true;
+		else return(search(start->right, name));
+	}
 
 }
-
-void printAll(struct node* node) {
-	if (node == NULL) return;
-	
-
-	printAll(node->left);
-	cout << node->input.firstName << endl;
-	printAll(node->right);
-
-}
-
-
-/*void printAll(node* start) {
-	if (start->right != NULL) {
-		printOne(start->right);
-	}
-	printOne(start);
-	if (start->left != NULL) {
-		printOne(start->left);
-	}
-}*/
 
 void deleteOne(string del) {
 
@@ -186,4 +169,25 @@ void deleteOne(string del) {
  
 void edit(string change) {
 
+}
+
+/*void printAll(struct node* node) {
+	if (node == NULL) return;
+
+
+	printAll(node->left);
+	cout << node->input.firstName << endl;
+	printAll(node->right);
+
+}*/
+
+
+void printAll(node* start) {
+	if (start->right != NULL) {
+		printAll(start->right);
+	}
+	cout << start->input.firstName << endl;
+	if (start->left != NULL) {
+		printAll(start->left);
+	}
 }
