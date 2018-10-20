@@ -34,6 +34,8 @@ node* bhome = new node;
 node* home = new node;
 node* newNode = new node;
 
+int counter = 0;
+
 bool alphabet(string); //Determine left or right.
 void Entry(); //input to node;
 bool search(struct node*, string); //Search for name
@@ -153,13 +155,14 @@ void Entry() {
 }
 
 bool search(struct node* start, string name) {
-	if (start == NULL) {
+	/*if (start == NULL) {
 		return "Not found";
 	}
 	else {
 		if (name == start->input.firstName) return true;
 		else return(search(start->right, name));
-	}
+	}*/
+	return true;
 
 }
 
@@ -171,23 +174,23 @@ void edit(string change) {
 
 }
 
-/*void printAll(struct node* node) {
+void printAll(struct node* node) {
 	if (node == NULL) return;
 
-
+	counter++;
 	printAll(node->left);
 	cout << node->input.firstName << endl;
+	cout << counter << endl;
 	printAll(node->right);
 
-}*/
+}
 
 
-void printAll(node* start) {
+/*void printAll(node* start) {
 	if (start->right != NULL) {
 		printAll(start->right);
 	}
 	cout << start->input.firstName << endl;
 	if (start->left != NULL) {
 		printAll(start->left);
-	}
-}
+	}*/
