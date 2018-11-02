@@ -12,8 +12,8 @@ using namespace std;
 struct entry {
 	string firstName;
 	//string middleInt; 
-	string lastName;
-	string phoneNumber;
+	//string lastName;
+	//string phoneNumber;
 	//string DOB; day of birth
 	//string MOB; month of birth
 	//string YOB; year of birth
@@ -39,7 +39,7 @@ int counter = 0;
 bool alphabet(string); //Determine left or right.
 void Entry(); //input to node;
 bool search(struct node*, string); //Search for name
-void printAll (struct node*); //Prints entire tree.
+//void printAll (struct node*, int); //Prints entire tree.
 void deleteOne(string); //Deletes a node from the tree.
 void edit(string); //Edits one node. 
 
@@ -118,13 +118,13 @@ void Entry() {
 	//cin >> current->input.middleInt;
 	//outfile << current->input.middleInt << "*";
 
-	cout << "Last Name: ";
-	cin >> current->input.lastName;
-	outfile << current->input.lastName << "*";
+	//cout << "Last Name: ";
+	//cin >> current->input.lastName;
+	//outfile << current->input.lastName << "*";
 
-	cout << "Phone Number: ";
-	cin >> current->input.phoneNumber;
-	outfile << current->input.phoneNumber << "*\n";
+	//cout << "Phone Number: ";
+	//cin >> current->input.phoneNumber;
+	//outfile << current->input.phoneNumber << "*\n";
 
 
 	//cout << "Day of Birth: ";
@@ -174,14 +174,14 @@ void edit(string change) {
 
 }
 
-void printAll(struct node* node) {
+void printAll(struct node* node, int counter) {
 	if (node == NULL) return;
 
-	counter++;
-	printAll(node->left);
+	//counter++;
+	printAll(node->left, counter++);
 	cout << node->input.firstName << endl;
 	cout << counter << endl;
-	printAll(node->right);
+	printAll(node->right, counter++);
 
 }
 
