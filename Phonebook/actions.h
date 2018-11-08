@@ -5,6 +5,7 @@
 #include <sstream>
 #include <fstream>
 #include <vector>
+#include <iomanip>
 #include <stdlib.h>
 
 using namespace std;
@@ -174,7 +175,18 @@ void edit(string change) {
 
 }
 
-void printAll(struct node* node, int counter) {
+void printAll(node* start, int indent = 0) { //print entire tree
+	if (start != NULL) {
+		if (start->left) printAll(start->left, indent + 4);
+		if (start->right) printAll(start->right, indent + 4);
+		if (indent) {
+			cout << setw(indent) << ' ';
+		}
+		cout << start->input.firstName << "\n";
+	}
+}
+
+/*void printAll(struct node* node, int counter) {
 	if (node == NULL) return;
 
 	//counter++;
@@ -183,7 +195,7 @@ void printAll(struct node* node, int counter) {
 	cout << counter << endl;
 	printAll(node->right, counter++);
 
-}
+}*/
 
 
 /*void printAll(node* start) {
