@@ -36,11 +36,15 @@ node* home = new node;
 node* newNode = new node;
 
 int counter = 0;
+int rightPointers = 0;
+int leftPointers = 0;
 
 bool alphabet(string); //Determine left or right.
 void Entry(); //input to node;
 bool search(struct node*, string); //Search for name
-//void printAll (struct node*, int); //Prints entire tree.
+//void printAll (struct node*); //Prints entire tree.
+//void printAll(struct node*, int);
+void printAll();
 void deleteOne(string); //Deletes a node from the tree.
 void edit(string); //Edits one node. 
 
@@ -84,36 +88,37 @@ void Entry() {
 	cout << "First Name: ";
 	cin >> buffer;
 
-	newNode = NULL;
 	bcurrent = bhome;
 	current = home;
 
 	bool currentMove = false;
-	while (current != NULL) {
+	while (current != nullptr) {
 		if (alphabet(buffer)) {
 			bcurrent = current;
 			current = current->left;
 			currentMove = true;
-			cout << "testL" << endl;
-			break;
+			leftPointers++;
+			cout << "testL" << leftPointers << endl;
+			//break;
 		}else{
 			bcurrent = current;
 			current = current->right;
 			currentMove = false;
-			cout << "testR" << endl;
-			break;
+			rightPointers++;
+			cout << "testR" << rightPointers << endl;
+			//break;
 		}
 	}
-		if (currentMove) {
-		bcurrent->left = new node;
+	if (currentMove) {
+		bcurrent->left = newNode;
 		current = bcurrent->left;
 	}
 	else {
-		bcurrent->right = new node;
+		bcurrent->right = newNode;
 		current = bcurrent->right;
 	}
 	current->input.firstName = buffer;
-	outfile << current->input.firstName << "*";
+	outfile << current->input.firstName << "*" << endl;
 
 	//cout << "Middle Initial: ";
 	//cin >> current->input.middleInt;
@@ -175,7 +180,11 @@ void edit(string change) {
 
 }
 
-void printAll(node* start, int indent = 0) { //print entire tree
+void printAll() {
+	
+}
+
+/*void printAll(node* start, int indent = 0) { //print entire tree
 	if (start != NULL) {
 		if (start->left) printAll(start->left, indent + 4);
 		if (start->right) printAll(start->right, indent + 4);
@@ -183,17 +192,15 @@ void printAll(node* start, int indent = 0) { //print entire tree
 			cout << setw(indent) << ' ';
 		}
 		cout << start->input.firstName << "\n";
-	}
-}
+	}*/
 
-/*void printAll(struct node* node, int counter) {
+/*void printAll(struct node* node) {
 	if (node == NULL) return;
 
 	//counter++;
-	printAll(node->left, counter++);
+	printAll(node->left);
 	cout << node->input.firstName << endl;
-	cout << counter << endl;
-	printAll(node->right, counter++);
+	printAll(node->right);
 
 }*/
 
@@ -205,4 +212,5 @@ void printAll(node* start, int indent = 0) { //print entire tree
 	cout << start->input.firstName << endl;
 	if (start->left != NULL) {
 		printAll(start->left);
-	}*/
+	}
+}*/
