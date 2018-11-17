@@ -33,11 +33,8 @@ node* current;
 node* bcurrent;
 node* bhome = new node;
 node* home = new node;
-node* newNode = new node;
 
 int counter = 0;
-int rightPointers = 0;
-int leftPointers = 0;
 
 bool alphabet(string); //Determine left or right.
 void Entry(); //input to node;
@@ -86,38 +83,42 @@ void Entry() {
 	outfile.open("book.txt", ios::out | ios::app);
 
 	cout << "First Name: ";
-	cin >> buffer;
+	cin >> buffer; //Enter name.
+
+	int rightPointers = 0;
+	int leftPointers = 0;
+
 
 	bcurrent = bhome;
-	current = home;
+	current = home; //move current pointer back to head of tree
 
 	bool currentMove = false;
-	while (current != nullptr) {
-		if (alphabet(buffer)) {
+	while (current != nullptr) { //while current pointer doesnt reach a null part of the tree, keep moving left or right down the tree.
+		if (alphabet(buffer)) { //Compares if the previous node "name" is greater or less than alphabetically than Buffer
 			bcurrent = current;
-			current = current->left;
+			current = current->left;//move left
 			currentMove = true;
 			leftPointers++;
-			cout << "testL" << leftPointers << endl;
+			cout << "testL" << leftPointers << endl; //debug
 			//break;
 		}else{
 			bcurrent = current;
-			current = current->right;
+			current = current->right;//move right
 			currentMove = false;
 			rightPointers++;
-			cout << "testR" << rightPointers << endl;
+			cout << "testR" << rightPointers << endl;//debug
 			//break;
 		}
 	}
-	if (currentMove) {
-		bcurrent->left = newNode;
+	if (currentMove) {//create a new node pointer either left or right based on previous loop
+		bcurrent->left = new node;
 		current = bcurrent->left;
 	}
 	else {
-		bcurrent->right = newNode;
+		bcurrent->right = new node;
 		current = bcurrent->right;
 	}
-	current->input.firstName = buffer;
+	current->input.firstName = buffer;//populate new node with buffer data.
 	outfile << current->input.firstName << "*" << endl;
 
 	//cout << "Middle Initial: ";
