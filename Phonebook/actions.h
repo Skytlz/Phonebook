@@ -193,9 +193,10 @@ void printAll() {
 			cout << setw(indent) << ' ';
 		}
 		cout << start->input.firstName << "\n";
-	}*/
+	}
+}*/
 
-/*void printAll(struct node* node) {
+void printAll(struct node* node) {
 	if (node == NULL) return;
 
 	//counter++;
@@ -203,7 +204,7 @@ void printAll() {
 	cout << node->input.firstName << endl;
 	printAll(node->right);
 
-}*/
+}
 
 
 /*void printAll(node* start) {
