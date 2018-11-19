@@ -38,7 +38,7 @@ int counter = 0;
 
 bool alphabet(string); //Determine left or right.
 void Entry(); //input to node;
-bool search(struct node*, string); //Search for name
+void search(struct node*, string); //Search for name
 void printAll (struct node*); //Prints entire tree.
 //void printAll(struct node*, int);
 //void printAll();
@@ -100,14 +100,12 @@ void Entry() {
 			currentMove = true;
 			leftPointers++;
 			cout << "testL" << leftPointers << endl; 
-			//break;
 		}else{
 			bcurrent = current;
 			current = current->right;
 			currentMove = false;
 			rightPointers++;
 			cout << "testR" << rightPointers << endl;
-			//break;
 		}
 	}
 	if (currentMove) {
@@ -161,10 +159,13 @@ void Entry() {
 	outfile.close();
 }
 
-bool search(struct node* start, string name) {
-	if (start == nullptr) return;
-
-	delete start;
+void search(struct node* start, string name) {
+	if (start == nullptr) { return; }
+	
+	search(start->left, name);
+	if (start->input.firstName == name) { cout << true << endl; }
+	else { cout << false << endl; }
+	search(start->right, name);
 }
 
 void deleteOne(string del) {
@@ -175,9 +176,6 @@ void edit(string change) {
 
 }
 
-void printAll() {
-	
-}
 
 /*void printAll(node* start, int indent = 0) { //print entire tree
 	if (start != NULL) {
