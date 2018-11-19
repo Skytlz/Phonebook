@@ -39,9 +39,9 @@ int counter = 0;
 bool alphabet(string); //Determine left or right.
 void Entry(); //input to node;
 bool search(struct node*, string); //Search for name
-//void printAll (struct node*); //Prints entire tree.
+void printAll (struct node*); //Prints entire tree.
 //void printAll(struct node*, int);
-void printAll();
+//void printAll();
 void deleteOne(string); //Deletes a node from the tree.
 void edit(string); //Edits one node. 
 
@@ -83,34 +83,34 @@ void Entry() {
 	outfile.open("book.txt", ios::out | ios::app);
 
 	cout << "First Name: ";
-	cin >> buffer; //Enter name.
+	cin >> buffer; 
 
 	int rightPointers = 0;
 	int leftPointers = 0;
 
 
 	bcurrent = bhome;
-	current = home; //move current pointer back to head of tree
+	current = home; 
 
 	bool currentMove = false;
-	while (current != nullptr) { //while current pointer doesnt reach a null part of the tree, keep moving left or right down the tree.
-		if (alphabet(buffer)) { //Compares if the previous node "name" is greater or less than alphabetically than Buffer
+	while (current != nullptr) { 
+		if (alphabet(buffer)) {
 			bcurrent = current;
-			current = current->left;//move left
+			current = current->left;
 			currentMove = true;
 			leftPointers++;
-			cout << "testL" << leftPointers << endl; //debug
+			cout << "testL" << leftPointers << endl; 
 			//break;
 		}else{
 			bcurrent = current;
-			current = current->right;//move right
+			current = current->right;
 			currentMove = false;
 			rightPointers++;
-			cout << "testR" << rightPointers << endl;//debug
+			cout << "testR" << rightPointers << endl;
 			//break;
 		}
 	}
-	if (currentMove) {//create a new node pointer either left or right based on previous loop
+	if (currentMove) {
 		bcurrent->left = new node;
 		current = bcurrent->left;
 	}
@@ -118,7 +118,7 @@ void Entry() {
 		bcurrent->right = new node;
 		current = bcurrent->right;
 	}
-	current->input.firstName = buffer;//populate new node with buffer data.
+	current->input.firstName = buffer;
 	outfile << current->input.firstName << "*" << endl;
 
 	//cout << "Middle Initial: ";
@@ -162,15 +162,9 @@ void Entry() {
 }
 
 bool search(struct node* start, string name) {
-	/*if (start == NULL) {
-		return "Not found";
-	}
-	else {
-		if (name == start->input.firstName) return true;
-		else return(search(start->right, name));
-	}*/
-	return true;
+	if (start == nullptr) return;
 
+	delete start;
 }
 
 void deleteOne(string del) {
@@ -197,13 +191,14 @@ void printAll() {
 }*/
 
 void printAll(struct node* node) {
-	if (node == NULL) return;
+	if (node == nullptr) return;
 
 	//counter++;
 	printAll(node->left);
 	cout << node->input.firstName << endl;
 	printAll(node->right);
 
+	delete node;
 }
 
 
