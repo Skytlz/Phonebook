@@ -162,22 +162,7 @@ void Entry() {
 bool search(struct node* start, string name) {
 	if (start == nullptr) { return false; }
 	bool found = false;
-	
-	while (start != nullptr) {
-		search(start->left, name);
-		if (start->input.firstName == name) { 
-			found = true;
-			break;
-		}
-		else { 
-			found = false;
-			break;
-		}
-		search(start->right, name);
-		
-	}
-	delete start;
-	return found;
+
 }
 
 void deleteOne(struct node* start, string del) {
