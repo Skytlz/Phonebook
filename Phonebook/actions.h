@@ -29,8 +29,10 @@ struct node {
 	node* right;
 	node() : left(nullptr), right(nullptr) {}
 };
-//unique_ptr<node> home(new node());
-//unique_ptr<node> home(new node());
+/*unique_ptr<node> home(new node());
+unique_ptr<node> bhome(new node());
+shared_ptr<node> current(nullptr);
+shared_ptr<node> bcurrent(nullptr);*/
 node* current;
 node* bcurrent;
 node* bhome = new node;
@@ -40,7 +42,7 @@ int counter = 0;
 
 bool alphabet(string); //Determine left or right.
 void Entry(); //input to node;
-bool search(struct node, string); //Search for name
+bool search(struct node*, string); //Search for name
 void printAll (struct node*); //Prints entire tree.
 //void printAll(struct node*, int);
 //void printAll();
@@ -163,11 +165,13 @@ void Entry() {
 
 bool search(struct node* start, string target) {
 	if (start == nullptr) { return false; }
+	current = home;
+	bcurrent = bhome;
 	
 	if (target == start->input.firstName) { return true; }
 	else {
-		if (alphabet(target)) return search(start->left, target); 
-		else return search(start->right, target);
+		if (alphabet(target)) { current = current->left; return search(start->left, target); }
+		else { current = current->right; return search(start->right, target); }
 	}
 	return false;
 }
