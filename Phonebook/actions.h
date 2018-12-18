@@ -29,23 +29,21 @@ struct node {
 	node* right;
 	node() : left(nullptr), right(nullptr) {}
 };
-/*unique_ptr<node> home(new node());
+/*
+unique_ptr<node> home(new node());
 unique_ptr<node> bhome(new node());
 shared_ptr<node> current(nullptr);
-shared_ptr<node> bcurrent(nullptr);*/
+shared_ptr<node> bcurrent(nullptr);
+*/
 node* current;
 node* bcurrent;
 node* bhome = new node;
 node* home = new node;
 
-int counter = 0;
-
 bool alphabet(string); //Determine left or right.
 void Entry(); //input to node;
 bool search(struct node*, string); //Search for name
 void printAll (struct node*); //Prints entire tree.
-//void printAll(struct node*, int);
-//void printAll();
 void deleteOne(struct node*, string); //Deletes a node from the tree.
 void edit(struct node*, string); //Edits one node. 
 
@@ -91,7 +89,6 @@ void Entry() {
 
 	int rightPointers = 0;
 	int leftPointers = 0;
-
 
 	bcurrent = bhome;
 	current = home; 
@@ -184,36 +181,12 @@ void edit(struct node* start, string change) {
 
 }
 
-
-/*void printAll(node* start, int indent = 0) { //print entire tree
-	if (start != NULL) {
-		if (start->left) printAll(start->left, indent + 4);
-		if (start->right) printAll(start->right, indent + 4);
-		if (indent) {
-			cout << setw(indent) << ' ';
-		}
-		cout << start->input.firstName << "\n";
-	}
-}*/
-
 void printAll(struct node* node) {
 	if (node == nullptr) return;
 
-	//counter++;
 	printAll(node->left);
 	cout << node->input.firstName << endl;
 	printAll(node->right);
 
 	delete node;
 }
-
-
-/*void printAll(node* start) {
-	if (start->right != NULL) {
-		printAll(start->right);
-	}
-	cout << start->input.firstName << endl;
-	if (start->left != NULL) {
-		printAll(start->left);
-	}
-}*/
