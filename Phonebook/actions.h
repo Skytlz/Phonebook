@@ -132,7 +132,6 @@ void Entry() {
 	//cin >> current->input.phoneNumber;
 	//outfile << current->input.phoneNumber << "*\n";
 
-
 	//cout << "Day of Birth: ";
 	//cin >> current->input.DOB;
 	//outfile << current->input.DOB << "*";
