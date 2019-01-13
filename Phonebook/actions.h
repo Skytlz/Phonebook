@@ -6,6 +6,7 @@
 #include <fstream>
 #include <vector>
 #include <iomanip>
+#include <memory>
 #include <stdlib.h>
 
 using namespace std;
@@ -29,16 +30,16 @@ struct node {
 	node* right;
 	node() : left(nullptr), right(nullptr) {}
 };
-/*
-unique_ptr<node> home(new node());
-unique_ptr<node> bhome(new node());
+
+weak_ptr<node> home;
+weak_ptr<node> bhome;
 shared_ptr<node> current(nullptr);
 shared_ptr<node> bcurrent(nullptr);
-*/
-node* current;
+
+/*node* current;
 node* bcurrent;
 node* bhome = new node;
-node* home = new node;
+node* home = new node;*/
 
 bool alphabet(string); //Determine left or right.
 void Entry(); //input to node;
@@ -161,15 +162,12 @@ void Entry() {
 
 bool search(struct node* start, string target) {
 	if (start == nullptr) { return false; }
-	current = home;
-	bcurrent = bhome;
 	
-	if (target == start->input.firstName) { return true; }
-	else {
-		if (alphabet(target)) { current = current->left; return search(start->left, target); }
-		else { current = current->right; return search(start->right, target); }
-	}
-	return false;
+
+	/*search(start->left, target);
+	if (start->input.firstName == target) { return true; }
+	search(start->right, target);
+	delete start;*/
 }
 
 void deleteOne(struct node* start, string del) {
