@@ -33,8 +33,8 @@ struct node {
 
 weak_ptr<node> home;
 weak_ptr<node> bhome;
-shared_ptr<node> current(nullptr);
-shared_ptr<node> bcurrent(nullptr);
+shared_ptr<node> current = make_shared<node>();
+shared_ptr<node> bcurrent = make_shared<node>();
 
 /*node* current;
 node* bcurrent;
