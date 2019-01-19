@@ -43,10 +43,10 @@ node* home = new node;*/
 
 bool alphabet(string); //Determine left or right.
 void Entry(); //input to node;
-bool search(struct node*, string); //Search for name
-void printAll (struct node*); //Prints entire tree.
-void deleteOne(struct node*, string); //Deletes a node from the tree.
-void edit(struct node*, string); //Edits one node. 
+bool search(weak_ptr<node>, string); //Search for name
+void printAll (weak_ptr<node>); //Prints entire tree.
+void deleteOne(weak_ptr<node>, string); //Deletes a node from the tree.
+void edit(weak_ptr<node>, string); //Edits one node. 
 
 
 bool alphabet(string alpha) {
@@ -160,7 +160,7 @@ void Entry() {
 	outfile.close();
 }
 
-bool search(struct node* start, string target) {
+bool search(weak_ptr<node> start, string target) {
 	if (start == nullptr) { return false; }
 	
 
@@ -170,20 +170,19 @@ bool search(struct node* start, string target) {
 	delete start;*/
 }
 
-void deleteOne(struct node* start, string del) {
+void deleteOne(weak_ptr<node> start, string del) {
 	cout << search(start, del) << endl;
 }
  
-void edit(struct node* start, string change) {
+void edit(weak_ptr<node> start, string change) {
 
 }
 
-void printAll(struct node* node) {
-	if (node == nullptr) return;
+void printAll(weak_ptr<node> start) {
+	if (start == nullptr) return;
 
-	printAll(node->left);
-	cout << node->input.firstName << endl;
-	printAll(node->right);
+	printAll(start->left);
+	cout << start->input.firstName << endl;
+	printAll(start->right);
 
-	delete node;
 }
