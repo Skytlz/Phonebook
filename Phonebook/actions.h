@@ -31,10 +31,10 @@ struct node {
 	node() : left(nullptr), right(nullptr) {}
 };
 
-weak_ptr<node> home;
+/*weak_ptr<node> home;
 weak_ptr<node> bhome;
 shared_ptr<node> current = make_shared<node>();
-shared_ptr<node> bcurrent = make_shared<node>();
+shared_ptr<node> bcurrent = make_shared<node>();*/
 
 /*node* current;
 node* bcurrent;
@@ -50,6 +50,7 @@ void edit(weak_ptr<node>, string); //Edits one node.
 
 
 bool alphabet(string alpha) {
+	shared_ptr<node> current = make_shared<node>();
 	int alphaLength = alpha.length();
 	int nameLength = current->input.firstName.length(); 
 
@@ -83,6 +84,10 @@ bool alphabet(string alpha) {
 void Entry() {
 	string buffer;
 	ofstream outfile;
+	shared_ptr<node> current = make_shared<node>();
+	shared_ptr<node> bcurrent = make_shared<node>();
+	shared_ptr<node> home = make_shared<node>();
+	shared_ptr<node> bhome = make_shared<node>();
 	outfile.open("book.txt", ios::out | ios::app);
 
 	cout << "First Name: ";
