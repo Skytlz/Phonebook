@@ -6,7 +6,6 @@
 #include <fstream>
 #include <vector>
 #include <iomanip>
-#include <memory>
 #include <stdlib.h>
 
 using namespace std;
@@ -30,29 +29,23 @@ struct node {
 	node* right;
 	node() : left(nullptr), right(nullptr) {}
 };
-
-/*weak_ptr<node> home;
-weak_ptr<node> bhome;
-shared_ptr<node> current = make_shared<node>();
-shared_ptr<node> bcurrent = make_shared<node>();*/
-
-/*node* current;
+node* current;
 node* bcurrent;
 node* bhome = new node;
-node* home = new node;*/
+node* home = new node;
+
 
 bool alphabet(string); //Determine left or right.
 void Entry(); //input to node;
-bool search(weak_ptr<node>, string); //Search for name
-void printAll (weak_ptr<node>); //Prints entire tree.
-void deleteOne(weak_ptr<node>, string); //Deletes a node from the tree.
-void edit(weak_ptr<node>, string); //Edits one node. 
+bool search(struct node*, string); //Search for name
+void printAll(struct node*); //Prints entire tree.
+void deleteOne(struct node*, string); //Deletes a node from the tree.
+void edit(struct node*, string); //Edits one node. 
 
 
 bool alphabet(string alpha) {
-	shared_ptr<node> current = make_shared<node>();
 	int alphaLength = alpha.length();
-	int nameLength = current->input.firstName.length(); 
+	int nameLength = current->input.firstName.length(); //So I don't have to type "current->input.firstName.length();" again and again.
 
 	if (alphaLength < nameLength) {
 		for (int i = 0; i < alphaLength; i++) {
@@ -84,30 +77,28 @@ bool alphabet(string alpha) {
 void Entry() {
 	string buffer;
 	ofstream outfile;
-	shared_ptr<node> current = make_shared<node>();
-	shared_ptr<node> bcurrent = make_shared<node>();
-	shared_ptr<node> home = make_shared<node>();
-	shared_ptr<node> bhome = make_shared<node>();
 	outfile.open("book.txt", ios::out | ios::app);
 
 	cout << "First Name: ";
-	cin >> buffer; 
+	cin >> buffer;
 
 	int rightPointers = 0;
 	int leftPointers = 0;
 
+
 	bcurrent = bhome;
-	current = home; 
+	current = home;
 
 	bool currentMove = false;
-	while (current != nullptr) { 
+	while (current != nullptr) {
 		if (alphabet(buffer)) {
 			bcurrent = current;
 			current = current->left;
 			currentMove = true;
 			leftPointers++;
-			cout << "testL" << leftPointers << endl; 
-		}else{
+			cout << "testL" << leftPointers << endl;
+		}
+		else {
 			bcurrent = current;
 			current = current->right;
 			currentMove = false;
@@ -138,6 +129,7 @@ void Entry() {
 	//cin >> current->input.phoneNumber;
 	//outfile << current->input.phoneNumber << "*\n";
 
+
 	//cout << "Day of Birth: ";
 	//cin >> current->input.DOB;
 	//outfile << current->input.DOB << "*";
@@ -165,29 +157,43 @@ void Entry() {
 	outfile.close();
 }
 
-bool search(weak_ptr<node> start, string target) {
-	if (start == nullptr) { return false; }
-	
+bool search(struct node* start, string name) {
+	/*if (start == nullptr) { return false; }
+	bool found = false;
 
-	/*search(start->left, target);
-	if (start->input.firstName == target) { return true; }
-	search(start->right, target);
-	delete start;*/
+	while (start != nullptr) {
+		search(start->left, name);
+		if (start->input.firstName == name) {
+			found = true;
+			break;
+		}
+		else {
+			found = false;
+			break;
+		}
+		search(start->right, name);
+
+	}
+	delete start;
+	return found;*/
+	return 0;
 }
 
-void deleteOne(weak_ptr<node> start, string del) {
+void deleteOne(struct node* start, string del) {
 	cout << search(start, del) << endl;
 }
- 
-void edit(weak_ptr<node> start, string change) {
+
+void edit(struct node* start, string change) {
 
 }
 
-void printAll(weak_ptr<node> start) {
-	if (start == nullptr) return;
 
-	printAll(start->left);
-	cout << start->input.firstName << endl;
-	printAll(start->right);
+void printAll(struct node* node) {
+	if (node == nullptr) return;
 
+	printAll(node->left);
+	cout << node->input.firstName << endl;
+	printAll(node->right);
+
+	delete node;
 }
