@@ -38,7 +38,7 @@ node* home = new node;
 bool alphabet(string); //Determine left or right.
 void Entry(); //input to node;
 bool search(struct node*, string); //Search for name
-void printAll(); //Prints entire tree.
+void printAll(struct node*); //Prints entire tree.
 void deleteOne(struct node*, string); //Deletes a node from the tree.
 void edit(struct node*, string); //Edits one node. 
 
@@ -176,13 +176,12 @@ void edit(struct node* start, string change) {
 
 }
 
-void printAll() {
+void printAll(struct node* home) {
 	node* start = home;
+
 	if (start == nullptr) return;
 
 	printAll(start->left);
 	cout << start->input.firstName << endl;
 	printAll(start->right);
-
-	delete start;
 }
