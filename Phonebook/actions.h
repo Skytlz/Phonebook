@@ -29,23 +29,23 @@ struct node {
 	node* right;
 	node() : left(nullptr), right(nullptr) {}
 };
+
 node* current;
 node* bcurrent;
 node* bhome = new node;
 node* home = new node;
 
-
 bool alphabet(string); //Determine left or right.
 void Entry(); //input to node;
 bool search(struct node*, string); //Search for name
-void printAll(struct node*); //Prints entire tree.
+void printAll(); //Prints entire tree.
 void deleteOne(struct node*, string); //Deletes a node from the tree.
 void edit(struct node*, string); //Edits one node. 
 
 
 bool alphabet(string alpha) {
 	int alphaLength = alpha.length();
-	int nameLength = current->input.firstName.length(); //So I don't have to type "current->input.firstName.length();" again and again.
+	int nameLength = current->input.firstName.length();
 
 	if (alphaLength < nameLength) {
 		for (int i = 0; i < alphaLength; i++) {
@@ -84,7 +84,6 @@ void Entry() {
 
 	int rightPointers = 0;
 	int leftPointers = 0;
-
 
 	bcurrent = bhome;
 	current = home;
@@ -129,7 +128,6 @@ void Entry() {
 	//cin >> current->input.phoneNumber;
 	//outfile << current->input.phoneNumber << "*\n";
 
-
 	//cout << "Day of Birth: ";
 	//cin >> current->input.DOB;
 	//outfile << current->input.DOB << "*";
@@ -157,26 +155,17 @@ void Entry() {
 	outfile.close();
 }
 
-bool search(struct node* start, string name) {
-	/*if (start == nullptr) { return false; }
-	bool found = false;
+bool search(struct node* start, string target) {
+	if (start == nullptr) { return false; }
+	current = home;
+	bcurrent = bhome;
 
-	while (start != nullptr) {
-		search(start->left, name);
-		if (start->input.firstName == name) {
-			found = true;
-			break;
-		}
-		else {
-			found = false;
-			break;
-		}
-		search(start->right, name);
-
+	if (target == start->input.firstName) { return true; }
+	else {
+		if (alphabet(target)) { current = current->left; return search(start->left, target); }
+		else { current = current->right; return search(start->right, target); }
 	}
-	delete start;
-	return found;*/
-	return 0;
+	return false;
 }
 
 void deleteOne(struct node* start, string del) {
@@ -187,13 +176,13 @@ void edit(struct node* start, string change) {
 
 }
 
+void printAll() {
+	node* start = home;
+	if (start == nullptr) return;
 
-void printAll(struct node* node) {
-	if (node == nullptr) return;
+	printAll(start->left);
+	cout << start->input.firstName << endl;
+	printAll(start->right);
 
-	printAll(node->left);
-	cout << node->input.firstName << endl;
-	printAll(node->right);
-
-	delete node;
+	delete start;
 }
