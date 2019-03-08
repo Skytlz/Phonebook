@@ -32,8 +32,8 @@ struct node {
 
 node* current;
 node* bcurrent;
-node* bhome = new node;
-node* home = new node;
+node* bhead = new node;
+node* head = new node;
 
 bool alphabet(string); //Determine left or right.
 void Entry(); //input to node;
@@ -85,8 +85,8 @@ void Entry() {
 	int rightPointers = 0;
 	int leftPointers = 0;
 
-	bcurrent = bhome;
-	current = home;
+	bcurrent = bhead;
+	current = head;
 
 	bool currentMove = false;
 	while (current != nullptr) {
@@ -157,14 +157,19 @@ void Entry() {
 
 bool search(struct node* start, string target) {
 	if (start == nullptr) { return false; }
-	current = home;
-	bcurrent = bhome;
-
-	if (target == start->input.firstName) { return true; }
-	else {
-		if (alphabet(target)) { current = current->left; return search(start->left, target); }
-		else { current = current->right; return search(start->right, target); }
+	struct node* searcher = start;
+	while (searcher != nullptr) {
+		if (searcher->input.firstName == target)
+			return true;
+		searcher = searcher->right;
 	}
+	searcher = start;
+	while (searcher != nullptr) {
+		if (searcher->input.firstName == target)
+			return true;
+		searcher = searcher->left;
+	}
+	delete searcher;
 	return false;
 }
 
@@ -176,9 +181,7 @@ void edit(struct node* start, string change) {
 
 }
 
-void printAll(struct node* home) {
-	node* start = home;
-
+void printAll(struct node* start) {
 	if (start == nullptr) return;
 
 	printAll(start->left);
