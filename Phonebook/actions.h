@@ -36,7 +36,8 @@ node* bhead = new node;
 node* head = new node;
 
 bool alphabet(string); //Determine left or right.
-void Entry(); //input to node;
+void Entry(); //input to node (Only First Name);
+void Entry(int, string); //From file into memory.
 bool search(struct node*, string); //Search for name
 void printAll(struct node*); //Prints entire tree.
 void deleteOne(struct node*, string); //Deletes a node from the tree.
@@ -75,13 +76,13 @@ bool alphabet(string alpha) {
 }
 
 void Entry() {
-	string buffer;
 	ofstream outfile;
+	string buffer;
 	outfile.open("book.txt", ios::out | ios::app);
 
 	cout << "First Name: ";
 	cin >> buffer;
-
+	
 	int rightPointers = 0;
 	int leftPointers = 0;
 
@@ -151,8 +152,39 @@ void Entry() {
 	//cout << "Occupation: ";
 	//cin >> current->input.occupation;
 	//outfile << current->input.occupation << "*\n";
-
+	outfile << "-" << endl;
 	outfile.close();
+}
+void Entry(int num, string data) {
+	switch (num) {
+	case 1:
+		bcurrent = bhead;
+		current = head;
+
+		bool moving = false;
+		while (current != nullptr) {
+			if (alphabet(data)) {
+				bcurrent = current;
+				current = current->left;
+				moving = true;
+			}
+			else {
+				bcurrent = current;
+				current = current->right;
+				moving = false;
+			}
+		}
+		if (moving) {
+			bcurrent->left = new node;
+			current = bcurrent->left;
+		}
+		else {
+			bcurrent->right = new node;
+			current = bcurrent->right;
+		}
+		current->input.firstName = data;
+		cout << endl << "done" << endl;
+	}
 }
 
 bool search(struct node* start, string target) {
