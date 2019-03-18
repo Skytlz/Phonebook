@@ -183,8 +183,9 @@ void Entry(int num, string data) {
 			current = bcurrent->right;
 		}
 		current->input.firstName = data;
-		cout << endl << "done" << endl;
+		cout << "\"" << data << "\" \n"<< "done" << endl;
 	}
+	//cout << data;
 }
 
 bool search(struct node* start, string target) {
