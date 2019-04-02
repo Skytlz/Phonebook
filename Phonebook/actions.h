@@ -156,6 +156,9 @@ void Entry() {
 	outfile.close();
 }
 void Entry(int num, string data) {
+	if (data.at(1) == '\n') {
+		data.erase(0);
+	}
 	switch (num) {
 	case 1:
 		bcurrent = bhead;
@@ -183,10 +186,17 @@ void Entry(int num, string data) {
 			current = bcurrent->right;
 		}
 		current->input.firstName = data;
-		cout << "\"" << data << "\" \n"<< "done" << endl;
+		if (data.at(0) == '\n') {
+			cout << "\"" << "\\n" << "\" \n" << "done; Length: " << data.length() << endl;
+		}
+		else {
+			cout << "\"" << data << "\" \n" << "done; Length: " << data.length() << endl;
+		}
+			
 	}
 	//cout << data;
 }
+	
 
 bool search(struct node* start, string target) {
 	if (start == nullptr) { return false; }
