@@ -115,7 +115,7 @@ void Entry() {
 		current = bcurrent->right;
 	}
 	current->input.firstName = buffer;
-	outfile << current->input.firstName << "*" << endl;
+	outfile << current->input.firstName << endl;
 
 	//cout << "Middle Initial: ";
 	//cin >> current->input.middleInt;
@@ -152,13 +152,9 @@ void Entry() {
 	//cout << "Occupation: ";
 	//cin >> current->input.occupation;
 	//outfile << current->input.occupation << "*\n";
-	outfile << "-" << endl;
 	outfile.close();
 }
 void Entry(int num, string data) {
-	if (data.at(1) == '\n') {
-		data.erase(0);
-	}
 	switch (num) {
 	case 1:
 		bcurrent = bhead;
@@ -186,13 +182,7 @@ void Entry(int num, string data) {
 			current = bcurrent->right;
 		}
 		current->input.firstName = data;
-		if (data.at(0) == '\n') {
-			cout << "\"" << "\\n" << "\" \n" << "done; Length: " << data.length() << endl;
-		}
-		else {
-			cout << "\"" << data << "\" \n" << "done; Length: " << data.length() << endl;
-		}
-			
+		cout << "\"" << data << "\" \n" << "done; Length: " << data.length() << endl;	
 	}
 	//cout << data;
 }

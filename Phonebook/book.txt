@@ -1,6 +1,4 @@
-Jack*
--
-Yeah*
--
-Steve*
--
+Jack
+Vitaly
+Alex
+Zack
