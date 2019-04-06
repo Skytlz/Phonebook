@@ -207,7 +207,7 @@ bool search(struct node* start, string target) {
 }
 
 void deleteOne(struct node* start, string del) {
-	cout << search(start, del) << endl;
+	
 }
 
 void edit(struct node* start, string change) {
