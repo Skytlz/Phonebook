@@ -116,7 +116,7 @@ void Entry() {
 	}
 	current->input.firstName = buffer;
 	outfile << current->input.firstName << endl;
-
+/*
 	//cout << "Middle Initial: ";
 	//cin >> current->input.middleInt;
 	//outfile << current->input.middleInt << "*";
@@ -151,7 +151,7 @@ void Entry() {
 
 	//cout << "Occupation: ";
 	//cin >> current->input.occupation;
-	//outfile << current->input.occupation << "*\n";
+	//outfile << current->input.occupation << "*\n";*/
 	outfile.close();
 }
 void Entry(int num, string data) {
@@ -160,17 +160,24 @@ void Entry(int num, string data) {
 		bcurrent = bhead;
 		current = head;
 
+		int rightPointers = 0;
+		int leftPointers = 0;
+
 		bool moving = false;
 		while (current != nullptr) {
 			if (alphabet(data)) {
 				bcurrent = current;
 				current = current->left;
 				moving = true;
+				leftPointers++;
+				cout << "testL" << leftPointers << endl;
 			}
 			else {
 				bcurrent = current;
 				current = current->right;
 				moving = false;
+				rightPointers++;
+				cout << "testR" << rightPointers << endl;
 			}
 		}
 		if (moving) {
@@ -182,25 +189,31 @@ void Entry(int num, string data) {
 			current = bcurrent->right;
 		}
 		current->input.firstName = data;
-		cout << "\"" << data << "\" \n" << "done; Length: " << data.length() << endl;	
+		cout << "\"" << data << "\" \n" << endl;
 	}
 	//cout << data;
 }
 	
 
 bool search(struct node* start, string target) {
-	if (start == nullptr) { return false; }
+	int rightPointers = 0;
+	int leftPointers = 0;
 	struct node* searcher = start;
+	if (searcher == nullptr) { return false; }
 	while (searcher != nullptr) {
+		rightPointers++;
 		if (searcher->input.firstName == target)
 			return true;
 		searcher = searcher->right;
+		cout << rightPointers << endl;
 	}
 	searcher = start;
 	while (searcher != nullptr) {
+		leftPointers++;
 		if (searcher->input.firstName == target)
 			return true;
 		searcher = searcher->left;
+		cout << leftPointers << endl;
 	}
 	delete searcher;
 	return false;
