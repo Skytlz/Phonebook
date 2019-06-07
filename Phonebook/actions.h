@@ -1,12 +1,17 @@
 //actions.h: Actions
 
+#pragma once
 #include <iostream>
+#include <memory>
+#include <fstream>
 #include <string>
 #include <sstream>
 #include <fstream>
 #include <vector>
 #include <iomanip>
+#include <algorithm>
 #include <stdlib.h>
+#include "stdafx.h"
 
 using namespace std;
 
@@ -35,6 +40,7 @@ node* bcurrent;
 node* bhead = new node;
 node* head = new node;
 
+void fromFile(); //Read from file
 bool alphabet(string); //Determine left or right.
 void Entry(); //input to node (Only First Name);
 void Entry(int, string); //From file into memory.
@@ -43,6 +49,30 @@ void printAll(struct node*); //Prints entire tree.
 void deleteOne(struct node*, string); //Deletes a node from the tree.
 void edit(struct node*, string); //Edits one node. 
 
+void fromFile() {
+	ifstream infile;
+	string buffer;
+	int i = 0;
+	char letter;
+	infile.open("book.txt", ios::in);
+	
+	while (infile.get(letter)) {
+		if (letter == ',') {
+			Entry(i, buffer);
+			buffer.clear();
+		}
+
+		if (letter == '\n') {
+			i++;
+			Entry(i, buffer);
+			buffer.clear();
+			i = 0;
+		}
+		
+		else { buffer += letter; }
+	}
+	infile.close();
+}
 
 bool alphabet(string alpha) {
 	int alphaLength = alpha.length();
@@ -115,53 +145,51 @@ void Entry() {
 		current = bcurrent->right;
 	}
 	current->input.firstName = buffer;
-	outfile << current->input.firstName << endl;
+	outfile << current->input.firstName << "\n"; //<- Change
 /*
 	//cout << "Middle Initial: ";
 	//cin >> current->input.middleInt;
-	//outfile << current->input.middleInt << "*";
+	//outfile << current->input.middleInt << ",";
 
 	//cout << "Last Name: ";
 	//cin >> current->input.lastName;
-	//outfile << current->input.lastName << "*";
+	//outfile << current->input.lastName << ",";
 
 	//cout << "Phone Number: ";
 	//cin >> current->input.phoneNumber;
-	//outfile << current->input.phoneNumber << "*\n";
+	//outfile << current->input.phoneNumber << ",";
 
 	//cout << "Day of Birth: ";
 	//cin >> current->input.DOB;
-	//outfile << current->input.DOB << "*";
+	//outfile << current->input.DOB << ",";
 
 	//cout << "Month of Birth: ";
 	//cin >> current->input.MOB;
-	//outfile << current->input.MOB << "*";
+	//outfile << current->input.MOB << ",";
 
 	//cout << "Year of Birth: ";
 	//cin >> current->input.YOB;
-	//outfile << current->input.YOB << "*";
+	//outfile << current->input.YOB << ",";
 
 	//cout << "Home Address: ";
 	//cin >> current->input.hAddress;
-	//outfile << current->input.hAddress << "*";
+	//outfile << current->input.hAddress << ",";
 
 	//cout << "Email Adress: ";
 	//cin >> current->input.eAddress;
-	//outfile << current->input.eAddress << "*";
+	//outfile << current->input.eAddress << ",";
 
 	//cout << "Occupation: ";
 	//cin >> current->input.occupation;
-	//outfile << current->input.occupation << "*\n";*/
+	//outfile << current->input.occupation << ",";*/
 	outfile.close();
 }
+
 void Entry(int num, string data) {
 	switch (num) {
 	case 1:
 		bcurrent = bhead;
 		current = head;
-
-		int rightPointers = 0;
-		int leftPointers = 0;
 
 		bool moving = false;
 		while (current != nullptr) {
@@ -169,15 +197,11 @@ void Entry(int num, string data) {
 				bcurrent = current;
 				current = current->left;
 				moving = true;
-				leftPointers++;
-				cout << "testL" << leftPointers << endl;
 			}
 			else {
 				bcurrent = current;
 				current = current->right;
 				moving = false;
-				rightPointers++;
-				cout << "testR" << rightPointers << endl;
 			}
 		}
 		if (moving) {
@@ -189,33 +213,24 @@ void Entry(int num, string data) {
 			current = bcurrent->right;
 		}
 		current->input.firstName = data;
-		cout << "\"" << data << "\" \n" << endl;
+		cout << "\"" << data << "\" Done.\n" << endl;
 	}
-	//cout << data;
 }
 	
 
 bool search(struct node* start, string target) {
-	int rightPointers = 0;
-	int leftPointers = 0;
-	struct node* searcher = start;
-	if (searcher == nullptr) { return false; }
-	while (searcher != nullptr) {
-		rightPointers++;
-		if (searcher->input.firstName == target)
-			return true;
-		searcher = searcher->right;
-		cout << rightPointers << endl;
+	current = start;
+	while (current != nullptr) {
+		if (current->input.firstName == target) { return true; }
+		else {
+			if (alphabet(target)) {
+				current = current->left;
+			}
+			else {
+				current = current->right;
+			}
+		}
 	}
-	searcher = start;
-	while (searcher != nullptr) {
-		leftPointers++;
-		if (searcher->input.firstName == target)
-			return true;
-		searcher = searcher->left;
-		cout << leftPointers << endl;
-	}
-	delete searcher;
 	return false;
 }
 
@@ -223,8 +238,17 @@ void deleteOne(struct node* start, string del) {
 	
 }
 
-void edit(struct node* start, string change) {
-
+void edit(struct node* start, string name) {
+	string change;
+	search(start, name);
+	if (current != nullptr) {
+		cout << current->input.firstName << endl;
+		cout << "Enter the new name" << endl;
+		cin >> change;
+		current->input.firstName = change;
+	}
+	else { cout << "Person not found" << endl; }
+	current = head;
 }
 
 void printAll(struct node* start) {
