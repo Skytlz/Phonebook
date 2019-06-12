@@ -11,6 +11,7 @@
 #include <iomanip>
 #include <algorithm>
 #include <stdlib.h>
+#include <stdio.h>
 #include "stdafx.h"
 
 using namespace std;
@@ -41,6 +42,7 @@ node* bhead = new node;
 node* head = new node;
 
 void fromFile(); //Read from file
+void delFile(); //Deletes book.txt
 bool alphabet(string); //Determine left or right.
 void Entry(); //input to node (Only First Name);
 void Entry(int, string); //From file into memory.
@@ -72,6 +74,10 @@ void fromFile() {
 		else { buffer += letter; }
 	}
 	infile.close();
+}
+
+void delFile() {
+	remove("book.txt");
 }
 
 bool alphabet(string alpha) {

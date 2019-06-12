@@ -14,8 +14,6 @@
 using namespace std;
 
 int main() {
-	ofstream outfile;
-
 	bhead->right = head;
 	bhead->left = head;
 
@@ -34,8 +32,6 @@ int main() {
 
 	fromFile();
 	
-	outfile.open("book.txt", ios::out | ios::app);
-
 	while (true) {
 		cout << "\nRunning Phonebook V\n" << endl;
 		cout << "(1)Enter a User *Working*" << endl;
@@ -43,7 +39,7 @@ int main() {
 		cout << "(3)Edit a User *Not Done*" << endl;
 		cout << "(4)Delete a User *Not Done*" << endl;
 		cout << "(5)Print All Users *Debug*" << endl;
-		cout << "(6)Delete all users *Not Working*" << endl;
+		cout << "(6)Delete all users *Working*" << endl;
 		cout << "(7)Quit Program" << endl;
 		cin >> act;
 
@@ -70,12 +66,11 @@ int main() {
 			deleteOne(head, name);
 		}
 		if (act == "5") { printAll(head); }
-		if (act == "6") { remove("book.txt"); }
+		if (act == "6") { delFile(); }
 
 		if (act == "7") {
 			delete head;
 			delete bhead;
-			outfile.close();
 			return 0;
 		}
 	}
