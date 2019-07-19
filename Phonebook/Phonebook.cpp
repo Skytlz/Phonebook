@@ -67,7 +67,7 @@ int main() {
 			deleteOne(head, name);
 		}
 		if (act == "5") { printAll(head);}
-		if (act == "6") { delFile(); }
+		if (act == "6") { delFile(); delTree(head); }
 
 		if (act == "7") {
 			delete head;

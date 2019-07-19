@@ -1,3 +1,0 @@
-1,Alex
-10,John
-0,Zack

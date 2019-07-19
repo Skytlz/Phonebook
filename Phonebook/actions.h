@@ -51,6 +51,8 @@ bool search(struct node*, string); //Search for name
 void printAll(struct node*); //Prints entire tree.
 void deleteOne(struct node*, string); //Deletes a node from the tree.
 void edit(struct node*, string); //Edits one node. 
+void copyTree(struct node*, ofstream&); //Copies the Entire tree to file.
+void delTree(struct node*); //Deletes entire tree
 
 void fromFile() {
 	ifstream infile;
@@ -259,7 +261,7 @@ void deleteOne(struct node* start, string del) {
 	
 }
 
-void edit(struct node* start, string name) {
+/*void edit(struct node* start, string name) {
 	ofstream outfile;
 	ifstream infile;
 	string change;
@@ -274,9 +276,10 @@ void edit(struct node* start, string name) {
 	else { cout << "Person not found" << endl; }
 	current = head;
 	delFile();
-	infile.open("book.txt", ios::in | ios::app);
+	outfile.open("book.txt", ios::out | ios::app);
 	copyTree(head, outfile);
-
+	delTree(head);
+	fromFile();
 
 	/*ifstream infile;
 	string change;
@@ -290,9 +293,8 @@ void edit(struct node* start, string name) {
 		}
 		else { buffer += letter; }
 	}
-	infile.close();*/
-	
-}
+	infile.close();
+}*/ //Quarantining code until safe us.
 
 void printAll(struct node* start) {
 	if (start == nullptr) return;
@@ -308,5 +310,11 @@ void copyTree(struct node* start, ofstream& outfile) {
 	copyTree(start->left, outfile);
 	outfile << start->input.hash << "," << start->input.firstName << endl;
 	copyTree(start->right, outfile);
-	
+}
+
+void delTree(struct node* start) {
+	if (start == nullptr)return;
+	delTree(start->left);
+	delTree(start->right);
+	free(start);
 }
