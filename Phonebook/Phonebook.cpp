@@ -17,6 +17,7 @@ int main() {
 	bhead->right = head;
 	bhead->left = head;
 
+	head->input.hash = "";
 	head->input.firstName = "John";
 	//home->input.middleInt = "E";
 	//home->input.lastName = "Doe";
@@ -65,7 +66,7 @@ int main() {
 			cin >> name;
 			deleteOne(head, name);
 		}
-		if (act == "5") { printAll(head); }
+		if (act == "5") { printAll(head);}
 		if (act == "6") { delFile(); }
 
 		if (act == "7") {

@@ -17,6 +17,7 @@
 using namespace std;
 
 struct entry {
+	string hash;
 	string firstName;
 	//string middleInt; 
 	//string lastName;
@@ -66,6 +67,7 @@ void fromFile() {
 
 		if (letter == '\n') {
 			i++;
+			buffer = buffer.substr(1);
 			Entry(i, buffer);
 			buffer.clear();
 			i = 0;
@@ -114,6 +116,7 @@ bool alphabet(string alpha) {
 void Entry() {
 	ofstream outfile;
 	string buffer;
+	string no;
 	outfile.open("book.txt", ios::out | ios::app);
 
 	cout << "First Name: ";
@@ -130,6 +133,7 @@ void Entry() {
 		if (alphabet(buffer)) {
 			bcurrent = current;
 			current = current->left;
+			no += '0';
 			currentMove = true;
 			leftPointers++;
 			cout << "testL" << leftPointers << endl;
@@ -137,6 +141,7 @@ void Entry() {
 		else {
 			bcurrent = current;
 			current = current->right;
+			no += '1';
 			currentMove = false;
 			rightPointers++;
 			cout << "testR" << rightPointers << endl;
@@ -150,10 +155,13 @@ void Entry() {
 		bcurrent->right = new node;
 		current = bcurrent->right;
 	}
+
+	current->input.hash = no;
 	current->input.firstName = buffer;
-	outfile << current->input.firstName << "\n"; //<- Change
+	outfile << current->input.hash << ",";
+	outfile << current->input.firstName << "\n"; //<- Change to ',' later
 /*
-	//cout << "Middle Initial: ";
+	//cout << "Middle Initial: ";s
 	//cin >> current->input.middleInt;
 	//outfile << current->input.middleInt << ",";
 
@@ -192,11 +200,16 @@ void Entry() {
 }
 
 void Entry(int num, string data) {
+	int i = 0;
+	string hashNo;
 	switch (num) {
-	case 1:
-		bcurrent = bhead;
-		current = head;
+	case 0:
+		hashNo = data;
 
+	case 1:
+		bcurrent = head;
+		current = head;
+		
 		bool moving = false;
 		while (current != nullptr) {
 			if (alphabet(data)) {
@@ -218,13 +231,15 @@ void Entry(int num, string data) {
 			bcurrent->right = new node;
 			current = bcurrent->right;
 		}
+		current->input.hash = hashNo;
 		current->input.firstName = data;
+		cout << current->input.hash << endl;
 		cout << "\"" << data << "\" Done.\n" << endl;
 	}
 }
 	
 
-bool search(struct node* start, string target) {
+bool search(struct node* start, string target) { //Needs case if there is more than 1 of the same.
 	current = start;
 	while (current != nullptr) {
 		if (current->input.firstName == target) { return true; }
@@ -245,9 +260,12 @@ void deleteOne(struct node* start, string del) {
 }
 
 void edit(struct node* start, string name) {
+	ofstream outfile;
+	ifstream infile;
 	string change;
 	search(start, name);
 	if (current != nullptr) {
+
 		cout << current->input.firstName << endl;
 		cout << "Enter the new name" << endl;
 		cin >> change;
@@ -255,12 +273,40 @@ void edit(struct node* start, string name) {
 	}
 	else { cout << "Person not found" << endl; }
 	current = head;
+	delFile();
+	infile.open("book.txt", ios::in | ios::app);
+	copyTree(head, outfile);
+
+
+	/*ifstream infile;
+	string change;
+	string buffer;
+	char letter;
+	infile.open("book.txt", ios::in);
+
+	while (infile.get(letter)) {
+		if (letter == '\n') {
+			if (buffer == change) {}
+		}
+		else { buffer += letter; }
+	}
+	infile.close();*/
+	
 }
 
 void printAll(struct node* start) {
 	if (start == nullptr) return;
 
 	printAll(start->left);
-	cout << start->input.firstName << endl;
+	cout << start->input.hash << start->input.firstName << endl;
 	printAll(start->right);
+}
+
+void copyTree(struct node* start, ofstream& outfile) {
+	if (start == nullptr) return;
+
+	copyTree(start->left, outfile);
+	outfile << start->input.hash << "," << start->input.firstName << endl;
+	copyTree(start->right, outfile);
+	
 }
