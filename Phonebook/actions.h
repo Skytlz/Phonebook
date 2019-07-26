@@ -371,7 +371,8 @@ void copyTree(struct node* start, ofstream& outfile) {
 }
 
 void delTree(struct node* start) {
-	if (start == nullptr)return;
+	if (start == nullptr) return;
+
 	delTree(start->left);
 	delTree(start->right);
 	free(start);
