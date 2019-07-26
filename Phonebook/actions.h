@@ -2,6 +2,7 @@
 
 #pragma once
 #include <iostream>
+#include <queue>
 #include <memory>
 #include <fstream>
 #include <string>
@@ -49,7 +50,7 @@ void Entry(); //input to node (Only First Name);
 void Entry(int, string); //From file into memory.
 bool search(struct node*, string); //Search for name
 void printAll(struct node*); //Prints entire tree.
-void deleteOne(struct node*, string); //Deletes a node from the tree.
+node* deleteOne(struct node*, string); //Deletes a node from the tree.
 void edit(struct node*, string); //Edits one node. 
 void copyTree(struct node*, ofstream&); //Copies the Entire tree to file.
 void delTree(struct node*); //Deletes entire tree
@@ -257,8 +258,65 @@ bool search(struct node* start, string target) { //Needs case if there is more t
 	return false;
 }
 
-void deleteOne(struct node* start, string del) {
+void deleteD(struct node* start, struct node* dnode) {
+	queue<struct node*> q;
+	q.push(start);
+
+	struct node* temp;
+	while (!q.empty()) {
+		temp = q.front();
+		q.pop();
+		if (temp = dnode) {
+			temp = NULL;
+			delete (dnode);
+			return;
+		}
+		if (temp->right) {
+			if (temp->right == dnode) {
+				temp->right = NULL;
+				delete (dnode);
+				return;
+			}
+			else { q.push(temp->right); }
+		}
+		if (temp->left) {
+			if (temp->left == dnode) {
+				temp->left = NULL;
+				delete (dnode);
+				return;
+			}
+			else q.push(temp->left);
+		}
+	}
+}
+
+node* deleteOne(struct node* start, string del) {
+	if (start == NULL) return NULL;
+
+	if (start->left == NULL && start->right == NULL) {
+		if (start->input.firstName == del) { return NULL; }
+		else { return start; }
+	}
+	queue<struct node*> q;
+	q.push(start);
 	
+	struct node* temp;
+	struct node* key = NULL;
+
+	while (!q.empty()) {
+		temp = q.front();
+		q.pop();
+
+		if (temp->input.firstName == del) key = temp;
+		if (temp->left) q.push(temp->left);
+		if (temp->right) q.push(temp->right);
+	}
+	if (key != NULL) {
+		string x = temp->input.firstName;
+		deleteD(start, temp);
+		key->input.firstName = x;
+	}
+	return start;
 }
 
 /*void edit(struct node* start, string name) {
