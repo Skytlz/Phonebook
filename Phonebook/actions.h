@@ -50,7 +50,7 @@ void Entry(); //input to node (Only First Name);
 void Entry(int, string); //From file into memory.
 bool search(struct node*, string); //Search for name
 void printAll(struct node*); //Prints entire tree.
-node* deleteOne(struct node*, string); //Deletes a node from the tree.
+//node* deleteOne(struct node*, string); //Deletes a node from the tree.
 void edit(struct node*, string); //Edits one node. 
 void copyTree(struct node*, ofstream&); //Copies the Entire tree to file.
 void delTree(struct node*); //Deletes entire tree
@@ -65,11 +65,11 @@ void fromFile() {
 	while (infile.get(letter)) {
 		if (letter == ',') {
 			Entry(i, buffer);
+			i++;
 			buffer.clear();
 		}
 
 		if (letter == '\n') {
-			i++;
 			buffer = buffer.substr(1);
 			Entry(i, buffer);
 			buffer.clear();
@@ -79,6 +79,48 @@ void fromFile() {
 		else { buffer += letter; }
 	}
 	infile.close();
+}
+
+void Entry(int num, string data) {
+	int i = 0;
+	string hashBuffer;
+	string no;
+	switch (num) {
+	case 0:
+		hashBuffer = data;
+		data.clear();
+	case 1:
+		bcurrent = head;
+		current = head;
+
+		bool moving = false;
+		while (current != nullptr) {
+			if (alphabet(data)) {
+				bcurrent = current;
+				current = current->left;
+				no += '0';
+				moving = true;
+			}
+			else {
+				bcurrent = current;
+				current = current->right;
+				no += '1';
+				moving = false;
+			}
+		}
+		if (moving) {
+			bcurrent->left = new node;
+			current = bcurrent->left;
+		}
+		else {
+			bcurrent->right = new node;
+			current = bcurrent->right;
+		}
+		current->input.hash = no;
+		current->input.firstName = data;
+		cout << current->input.hash << endl;
+		cout << "\"" << data << "\" Done.\n" << endl;
+	}
 }
 
 void delFile() {
@@ -202,44 +244,7 @@ void Entry() {
 	outfile.close();
 }
 
-void Entry(int num, string data) {
-	int i = 0;
-	string hashNo;
-	switch (num) {
-	case 0:
-		hashNo = data;
 
-	case 1:
-		bcurrent = head;
-		current = head;
-		
-		bool moving = false;
-		while (current != nullptr) {
-			if (alphabet(data)) {
-				bcurrent = current;
-				current = current->left;
-				moving = true;
-			}
-			else {
-				bcurrent = current;
-				current = current->right;
-				moving = false;
-			}
-		}
-		if (moving) {
-			bcurrent->left = new node;
-			current = bcurrent->left;
-		}
-		else {
-			bcurrent->right = new node;
-			current = bcurrent->right;
-		}
-		current->input.hash = hashNo;
-		current->input.firstName = data;
-		cout << current->input.hash << endl;
-		cout << "\"" << data << "\" Done.\n" << endl;
-	}
-}
 	
 
 bool search(struct node* start, string target) { //Needs case if there is more than 1 of the same.
@@ -258,7 +263,7 @@ bool search(struct node* start, string target) { //Needs case if there is more t
 	return false;
 }
 
-void deleteD(struct node* start, struct node* dnode) {
+/*void deleteD(struct node* start, struct node* dnode) {
 	queue<struct node*> q;
 	q.push(start);
 
@@ -317,9 +322,9 @@ node* deleteOne(struct node* start, string del) {
 		key->input.firstName = x;
 	}
 	return start;
-}
+}*/
 
-/*void edit(struct node* start, string name) {
+void edit(struct node* start, string name) {
 	ofstream outfile;
 	ifstream infile;
 	string change;
@@ -331,7 +336,7 @@ node* deleteOne(struct node* start, string del) {
 		cin >> change;
 		current->input.firstName = change;
 	}
-	else { cout << "Person not found" << endl; }
+	else { cout << "Person not found" << endl; return; }
 	current = head;
 	delFile();
 	outfile.open("book.txt", ios::out | ios::app);
@@ -351,14 +356,14 @@ node* deleteOne(struct node* start, string del) {
 		}
 		else { buffer += letter; }
 	}
-	infile.close();
-}*/ //Quarantining code until safe us.
+	infile.close();*/
+} //Quarantining code until safe us.
 
 void printAll(struct node* start) {
 	if (start == nullptr) return;
 
 	printAll(start->left);
-	cout << start->input.hash << start->input.firstName << endl;
+	cout << start->input.hash << ", " << start->input.firstName << endl;
 	printAll(start->right);
 }
 

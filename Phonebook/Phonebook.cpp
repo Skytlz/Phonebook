@@ -64,7 +64,7 @@ int main() {
 			cout << "Enter the first name of the person you would like to delete: ";
 			string name = "";
 			cin >> name;
-			deleteOne(head, name);
+			//deleteOne(head, name);
 		}
 		if (act == "5") { printAll(head);}
 		if (act == "6") { delFile(); delTree(head); }
