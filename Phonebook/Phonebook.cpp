@@ -6,28 +6,13 @@
 #include "actions.h"
 #include <iostream>
 #include <string>
-#include <fstream>
-#include <vector>
 #include <stdio.h>
 #include <stdlib.h>
 
 using namespace std;
 
 int main() {
-	bhead->right = head;
-	bhead->left = head;
-
-	head->input.hash = "";
-	head->input.firstName = "John";
-	//home->input.middleInt = "E";
-	//home->input.lastName = "Doe";
-	//home->input.phoneNumber = "1234567890";
-	//home->input.DOB = "1";
-	//home->input.MOB = "January";
-	//home->input.YOB = "1980";
-	//home->input.hAddress = "123 Fake St";
-	//home->input.eAddress = "johnEDoe@skytlz.com";
-	//home->input.occupation = "Man";
+	rootConstructor();
 
 	string act;
 
@@ -64,14 +49,19 @@ int main() {
 			cout << "Enter the first name of the person you would like to delete: ";
 			string name = "";
 			cin >> name;
-			//deleteOne(head, name);
+			deleteOne(head, name);
 		}
 		if (act == "5") { printAll(head);}
-		if (act == "6") { delFile(); delTree(head); }
+
+		if (act == "6") { 
+			delTree(head);
+			head = new node;
+			rootConstructor(); 
+		}
 
 		if (act == "7") {
-			delete head;
-			delete bhead;
+			delTree(head);
+			head = NULL;
 			return 0;
 		}
 	}
