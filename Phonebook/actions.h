@@ -52,16 +52,17 @@ void Entry(int, string); //From file into memory.
 bool search(struct node*, string); //Search for name
 void printAll(struct node*); //Prints entire tree.
 void edit(struct node*, string); //Edits one node. 
-void deleteOne(struct node*, string); //Deletes one user from the tree.
+struct node* deleteOne(struct node*, string); //Deletes one user from the tree.
 void copyTree(struct node*, ofstream&); //Copies the Entire tree to file.
 void delTree(struct node*); //Deletes entire tree
+struct node* leastVal(struct node*);
 
 void rootConstructor() {
 	bhead->right = head;
 	bhead->left = head;
 
 	head->input.hash = "";
-	head->input.firstName = "John";
+	head->input.firstName = "John"; //The untouchable.
 	//head->input.middleInt = "E";
 	//head->input.lastName = "Doe";
 	//head->input.phoneNumber = "1234567890";
@@ -311,61 +312,32 @@ void edit(struct node* start, string name) {
 	outfile.close();
 }
 
-void deleteOne(struct node* start, string name) {
-	node* bcurrent1;
-	char yn;
-	search(start, name);
-	if (current != nullptr) {
-		cout << current->input.firstName << endl;
-		cout << "Are you sure you want to remove this person? Y/N" << endl;
-		cin >> yn;
+struct node* deleteOne(struct node* start, string name) {
+	if (start == NULL) return start;
+	current = start;
+	
+	if (alphabet(name)) {
+		start->left = deleteOne(start->left, name);
 	}
-	else { cout << "Person not found."; return; }
-	if (yn == 'Y' || yn == 'y') {
-		ofstream outfile;
-		ofstream leftf;
-		ofstream rightf;
-		outfile.open("book.txt", ios::out | ios::app);
-		leftf.open("left.txt", ios::out | ios::app | ios_base::binary);
-		rightf.open("right.txt", ios::out | ios::app | ios_base::binary);
-		if (current->left == NULL && current->right == NULL) {
-			cout << current->left << endl;
-			cout << current->right << endl;
-			free(current);
-		}
-		if (current->left != NULL && current->right == NULL) {
-			bcurrent = current->left;
-			cout << current->left << endl;
-			cout << current->right << endl;
-			copyTree(bcurrent, leftf);
-		}
-		if (current->left == NULL && current->right != NULL) {
-			bcurrent = current->right;
-			cout << current->left << endl;
-			cout << current->right << endl;
-			copyTree(bcurrent, rightf);
-		}
-		if (current->left != NULL && current->right != NULL) {
-			bcurrent = current->left;
-			bcurrent1 = current->right;
-			cout << current->left << endl;
-			cout << current->right << endl;
-			copyTree(bcurrent, leftf);
-			copyTree(bcurrent1, rightf);
-		}
-		
-		outfile << leftf.rdbuf() << rightf.rdbuf();
-
-		delTree(head);
-		head = new node;
-		rootConstructor();
-		fromFile();
-		outfile.close();
-		leftf.close();
-		rightf.close();
+	else {
+		start->right = deleteOne(start->right, name);
 	}
-	else { return; }
+	if (name == start->input.firstName) {
+		if (start->left == NULL) {
+			struct node *temp = start->right;
+			free(start);
+			return temp;
+		}
+		else if (start->right == NULL) {
+			struct node* temp = start->left;
+			free(start);
+			return temp;
+		}
+		struct node* temp = leastVal(start->right);
 
+		start->input.firstName = temp->input.firstName;
+	}
+	return start;
 }
 
 void printAll(struct node* start) {
@@ -396,4 +368,31 @@ void delTree(struct node* start) {
 	else { cout << "Deleting: " << start->input.hash << ", " << start->input.firstName << endl; }
 	
 	free(start);
+}
+
+struct node* leastVal(struct node* start) {
+	struct node* temp = start;
+
+	while (temp && temp->left != NULL)
+		temp = temp->left;
+
+	return temp;
+}
+
+void reHash(struct node* start) {
+	if (start == nullptr) return;
+	
+	string no;
+
+
+	reHash(start->left);
+	if (start->left != nullptr) {
+		no += '0';
+	}
+	if (start->right != nullptr) {
+		no += '1';
+	}
+	reHash(start->right);
+
+	start->input.hash = no;
 }

@@ -50,6 +50,7 @@ int main() {
 			string name = "";
 			cin >> name;
 			deleteOne(head, name);
+			reHash(head);
 		}
 		if (act == "5") { printAll(head);}
 
@@ -63,6 +64,12 @@ int main() {
 			delTree(head);
 			head = NULL;
 			return 0;
+		}
+		if (act == "8") {
+			reHash(head);
+		}
+		if (act == "9") {
+			delFile();
 		}
 	}
 }
