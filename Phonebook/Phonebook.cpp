@@ -46,10 +46,14 @@ int main() {
 			edit(head, name);
 		}
 		if (act == "4") {
+			ofstream outfile;
 			cout << "Enter the first name of the person you would like to delete: ";
 			string name = "";
 			cin >> name;
 			deleteOne(head, name);
+			delFile();
+			outfile.open("book.txt", ios::app);
+			copyTree(head, outfile);
 			reHash(head);
 		}
 		if (act == "5") { printAll(head);}

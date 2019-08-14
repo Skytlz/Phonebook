@@ -56,6 +56,7 @@ struct node* deleteOne(struct node*, string); //Deletes one user from the tree.
 void copyTree(struct node*, ofstream&); //Copies the Entire tree to file.
 void delTree(struct node*); //Deletes entire tree
 struct node* leastVal(struct node*);
+void checker(int, string);
 
 void rootConstructor() {
 	bhead->right = head;
@@ -380,19 +381,56 @@ struct node* leastVal(struct node* start) {
 }
 
 void reHash(struct node* start) {
-	if (start == nullptr) return;
-	
+	ifstream infile;
+	string buffer;
+	int i = 0;
+	char letter;
+	infile.open("book.txt", ios::in);
+
+	while (infile.get(letter)) {
+		if (letter == ',') {
+			checker(i, buffer);
+			i++;
+			buffer.clear();
+
+			if (letter == '\n') {
+				buffer = buffer.substr(1);
+				checker(i, buffer);
+				buffer.clear();
+				i = 0;
+			}
+
+			else { buffer += letter; }
+		}
+		infile.close();
+	}
+}
+
+void checker(int num, string data) {
+	int i = 0;
+	string hashbuf;
 	string no;
+	switch (num) {
+	case 0:
+		hashbuf = data;
+		data.clear();
+	case 1:
+		if (data == "") { break; }
+		current = head;
+		bcurrent = head;
 
-
-	reHash(start->left);
-	if (start->left != nullptr) {
-		no += '0';
+		while (current != nullptr) {
+			if (alphabet(data)) {
+				bcurrent = current;
+				current = current->left;
+				no += '0';
+			}
+			else {
+				bcurrent = current;
+				current = current->right;
+				no += '1';
+			}
+			current->input.hash = no;
+		}
 	}
-	if (start->right != nullptr) {
-		no += '1';
-	}
-	reHash(start->right);
-
-	start->input.hash = no;
 }
