@@ -56,7 +56,7 @@ int main() {
 			copyTree(head, outfile);
 			reHash(head);
 		}
-		if (act == "5") { printAll(head);}
+		if (act == "5") { printAll(head,0);}
 
 		if (act == "6") { 
 			delTree(head);

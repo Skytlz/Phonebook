@@ -50,8 +50,8 @@ bool alphabet(string); //Determine left or right.
 void Entry(); //input to node (Only First Name);
 void Entry(int, string); //From file into memory.
 bool search(struct node*, string); //Search for name
-void printAll(struct node*); //Prints entire tree.
-void edit(struct node*, string); //Edits one node. 
+void printAll(struct node*, int); //Prints entire tree.
+struct node* edit(struct node*, string); //Edits one node. 
 struct node* deleteOne(struct node*, string); //Deletes one user from the tree.
 void copyTree(struct node*, ofstream&); //Copies the Entire tree to file.
 void delTree(struct node*); //Deletes entire tree
@@ -63,9 +63,9 @@ void rootConstructor() {
 	bhead->left = head;
 
 	head->input.hash = "";
-	head->input.firstName = "John"; //The untouchable.
-	//head->input.middleInt = "E";
-	//head->input.lastName = "Doe";
+	head->input.firstName = "Max"; //The untouchable.
+	//head->input.middleInt = "C";
+	//head->input.lastName = "Breamer";
 	//head->input.phoneNumber = "1234567890";
 	//head->input.DOB = "1";
 	//head->input.MOB = "January";
@@ -281,41 +281,12 @@ bool search(struct node* start, string target) { //Needs case if there is more t
 	return false;
 }
 
-void edit(struct node* start, string name) {
-	ofstream outfile;
-	ifstream infile;
-	string change;
-	search(start, name);
-	if (current != nullptr) {
-
-		cout << current->input.firstName << endl;
-		cout << "Enter the new name" << endl;
-		cin >> change;
-		current->input.firstName = change;
-	}
-	else { cout << "Person not found" << endl; return; }
-	current = head;
-	remove("temp.txt");
-	outfile.open("temp.txt", ios::out | ios::app);
-	copyTree(head, outfile);
-	outfile.close();
-	delFile();
-	outfile.open("book.txt", ios::out | ios::app);
-	copyTree(head, outfile);
-	delTree(head);
-	head = new node;
-	rootConstructor();
-	fromFile();
-	delFile();
-	outfile.close();
-	outfile.open("book.txt", ios::out);
-	copyTree(head, outfile);
-	outfile.close();
+struct node* edit(struct node* start, string name) {
+	if (start == nullptr) return start;
 }
 
 struct node* deleteOne(struct node* start, string name) {
-	if (start == NULL) return start;
-	current = start;
+	if (start == nullptr) return start;
 	
 	if (alphabet(name)) {
 		start->left = deleteOne(start->left, name);
@@ -324,12 +295,12 @@ struct node* deleteOne(struct node* start, string name) {
 		start->right = deleteOne(start->right, name);
 	}
 	if (name == start->input.firstName) {
-		if (start->left == NULL) {
+		if (start->left == nullptr) {
 			struct node *temp = start->right;
 			free(start);
 			return temp;
 		}
-		else if (start->right == NULL) {
+		else if (start->right == nullptr) {
 			struct node* temp = start->left;
 			free(start);
 			return temp;
@@ -341,13 +312,32 @@ struct node* deleteOne(struct node* start, string name) {
 	return start;
 }
 
-void printAll(struct node* start) {
+struct node* leastVal(struct node* start) {
+	struct node* temp = start;
+
+	while (temp && temp->left != nullptr)
+		temp = temp->left;
+
+	return temp;
+}
+
+void printAll(struct node* start, int space) {
 	if (start == nullptr) return;
 
-	printAll(start->left);
+	space += 5;
+
+	printAll(start->left, space);
+
+	cout << endl;
+	for (int i = 5; i < space; i++)
+		cout << " ";
+	cout << start->input.hash << ", " << start->input.firstName << "\n";
+	
+	printAll(start->right, space);
+	/*printAll(start->left);
 	if (start->input.hash == "") { cout << "NULL, " << start->input.firstName << endl; }
 	else { cout << start->input.hash << ", " << start->input.firstName << endl; }
-	printAll(start->right);
+	printAll(start->right);*/
 }
 
 void copyTree(struct node* start, ofstream& outfile) {
@@ -369,15 +359,6 @@ void delTree(struct node* start) {
 	else { cout << "Deleting: " << start->input.hash << ", " << start->input.firstName << endl; }
 	
 	free(start);
-}
-
-struct node* leastVal(struct node* start) {
-	struct node* temp = start;
-
-	while (temp && temp->left != NULL)
-		temp = temp->left;
-
-	return temp;
 }
 
 void reHash(struct node* start) {
