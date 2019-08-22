@@ -155,11 +155,11 @@ bool alphabet(string alpha) {
 	if (alphaLength < nameLength) {
 		for (int i = 0; i < alphaLength; i++) {
 			if (alpha.at(i) > current->input.firstName.at(i)) {
-				return true;
+				return false;
 				break;
 			}
 			else if (alpha.at(i) < current->input.firstName.at(i)) {
-				return false;
+				return true;
 				break;
 			}
 		}
@@ -167,16 +167,16 @@ bool alphabet(string alpha) {
 	else if (alphaLength >= nameLength) {
 		for (int i = 0; i < nameLength; i++) {
 			if (alpha.at(i) < current->input.firstName.at(i)) {
-				return false;
+				return true;
 				break;
 			}
 			else if (alpha.at(i) > current->input.firstName.at(i)) {
-				return true;
+				return false;
 				break;
 			}
 		}
 	}
-	return false;
+	return true;
 }
 
 void Entry() {
