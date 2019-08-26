@@ -118,24 +118,24 @@ void Entry(int num, string data) {
 		while (current != nullptr) {
 			if (alphabet(data)) {
 				bcurrent = current;
-				current = current->left;
-				no += '0';
+				current = current->right;
+				no += '1';
 				moving = true;
 			}
 			else {
 				bcurrent = current;
-				current = current->right;
-				no += '1';
+				current = current->left;
+				no += '0';
 				moving = false;
 			}
 		}
 		if (moving) {
-			bcurrent->left = new node;
-			current = bcurrent->left;
-		}
-		else {
 			bcurrent->right = new node;
 			current = bcurrent->right;
+		}
+		else {
+			bcurrent->left = new node;
+			current = bcurrent->left;
 		}
 		current->input.hash = no;
 		current->input.firstName = data;
@@ -198,28 +198,28 @@ void Entry() {
 	while (current != nullptr) {
 		if (alphabet(buffer)) {
 			bcurrent = current;
-			current = current->left;
-			no += '0';
-			currentMove = true;
-			leftPointers++;
-			cout << "testL" << leftPointers << endl;
-		}
-		else {
-			bcurrent = current;
 			current = current->right;
 			no += '1';
-			currentMove = false;
+			currentMove = true;
 			rightPointers++;
 			cout << "testR" << rightPointers << endl;
 		}
+		else {
+			bcurrent = current;
+			current = current->left;
+			no += '0';
+			currentMove = false;
+			leftPointers++;
+			cout << "testL" << leftPointers << endl;
+		}
 	}
 	if (currentMove) {
-		bcurrent->left = new node;
-		current = bcurrent->left;
-	}
-	else {
 		bcurrent->right = new node;
 		current = bcurrent->right;
+	}
+	else {
+		bcurrent->left = new node;
+		current = bcurrent->left;
 	}
 
 	current->input.hash = no;
@@ -271,10 +271,10 @@ bool search(struct node* start, string target) { //Needs case if there is more t
 		if (current->input.firstName == target) { return true; }
 		else {
 			if (alphabet(target)) {
-				current = current->left;
+				current = current->right;
 			}
 			else {
-				current = current->right;
+				current = current->left;
 			}
 		}
 	}
@@ -289,23 +289,23 @@ struct node* deleteOne(struct node* start, string name) {
 	if (start == nullptr) return start;
 	
 	if (alphabet(name)) {
-		start->left = deleteOne(start->left, name);
-	}
-	else {
 		start->right = deleteOne(start->right, name);
 	}
-	if (name == start->input.firstName) {
-		if (start->left == nullptr) {
-			struct node *temp = start->right;
+	else {
+		start->left = deleteOne(start->left, name);
+	}
+	if (start->input.firstName == name) {
+		if (start->right == nullptr) {
+			struct node *temp = start->left;
 			free(start);
 			return temp;
 		}
-		else if (start->right == nullptr) {
-			struct node* temp = start->left;
+		else if (start->left == nullptr) {
+			struct node* temp = start->right;
 			free(start);
 			return temp;
 		}
-		struct node* temp = leastVal(start->right);
+		struct node* temp = leastVal(start->left);
 
 		start->input.firstName = temp->input.firstName;
 	}
@@ -403,12 +403,12 @@ void checker(int num, string data) {
 		while (current != nullptr) {
 			if (alphabet(data)) {
 				bcurrent = current;
-				current = current->left;
+				current = current->right;
 				no += '0';
 			}
 			else {
 				bcurrent = current;
-				current = current->right;
+				current = current->left;
 				no += '1';
 			}
 			current->input.hash = no;
