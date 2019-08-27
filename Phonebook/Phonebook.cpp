@@ -50,7 +50,8 @@ int main() {
 			cout << "Enter the first name of the person you would like to delete: ";
 			string name = "";
 			cin >> name;
-			deleteOne(head, name);
+			cout << deleteOne(head, name) << endl;
+			cout << head << endl;
 			delFile();
 			outfile.open("book.txt", ios::app);
 			copyTree(head, outfile);
@@ -60,6 +61,7 @@ int main() {
 
 		if (act == "6") { 
 			delTree(head);
+			delFile();
 			head = new node;
 			rootConstructor(); 
 		}
@@ -71,9 +73,6 @@ int main() {
 		}
 		if (act == "8") {
 			reHash(head);
-		}
-		if (act == "9") {
-			delFile();
 		}
 	}
 }

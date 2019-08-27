@@ -155,11 +155,11 @@ bool alphabet(string alpha) {
 	if (alphaLength < nameLength) {
 		for (int i = 0; i < alphaLength; i++) {
 			if (alpha.at(i) > current->input.firstName.at(i)) {
-				return false;
+				return true;
 				break;
 			}
 			else if (alpha.at(i) < current->input.firstName.at(i)) {
-				return true;
+				return false;
 				break;
 			}
 		}
@@ -167,11 +167,11 @@ bool alphabet(string alpha) {
 	else if (alphaLength >= nameLength) {
 		for (int i = 0; i < nameLength; i++) {
 			if (alpha.at(i) < current->input.firstName.at(i)) {
-				return true;
+				return false;
 				break;
 			}
 			else if (alpha.at(i) > current->input.firstName.at(i)) {
-				return false;
+				return true;
 				break;
 			}
 		}
@@ -227,7 +227,7 @@ void Entry() {
 	outfile << current->input.hash << ",";
 	outfile << current->input.firstName << "\n"; //<- Change to ',' later
 /*
-	//cout << "Middle Initial: ";s
+	//cout << "Middle Initial: ";
 	//cin >> current->input.middleInt;
 	//outfile << current->input.middleInt << ",";
 
@@ -326,18 +326,15 @@ void printAll(struct node* start, int space) {
 
 	space += 5;
 
-	printAll(start->left, space);
+	printAll(start->right, space);
 
 	cout << endl;
 	for (int i = 5; i < space; i++)
 		cout << " ";
-	cout << start->input.hash << ", " << start->input.firstName << "\n";
-	
-	printAll(start->right, space);
-	/*printAll(start->left);
 	if (start->input.hash == "") { cout << "NULL, " << start->input.firstName << endl; }
 	else { cout << start->input.hash << ", " << start->input.firstName << endl; }
-	printAll(start->right);*/
+	
+	printAll(start->left, space);
 }
 
 void copyTree(struct node* start, ofstream& outfile) {
