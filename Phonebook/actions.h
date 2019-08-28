@@ -308,6 +308,7 @@ struct node* deleteOne(struct node* start, string name) {
 		struct node* temp = leastVal(start->left);
 
 		start->input.firstName = temp->input.firstName;
+		free(temp);
 	}
 	return start;
 }
