@@ -20,12 +20,12 @@ int main() {
 	
 	while (true) {
 		cout << "\nRunning Phonebook V\n" << endl;
-		cout << "(1)Enter a User *Working*" << endl;
-		cout << "(2)Search for a user *Working*" << endl;
+		cout << "(1)Enter a User."<< endl;
+		cout << "(2)Search for a user *Not Finished, Working*" << endl;
 		cout << "(3)Edit a User *Not Done*" << endl;
-		cout << "(4)Delete a User *Not Done*" << endl;
-		cout << "(5)Print All Users *Debug*" << endl;
-		cout << "(6)Delete all users *Working*" << endl;
+		cout << "(4)Delete a User *Not Working*" << endl;
+		cout << "(5)Print All Users."<< endl;
+		cout << "(6)Delete all users."<< endl;
 		cout << "(7)Quit Program" << endl;
 		cin >> act;
 

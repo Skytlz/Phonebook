@@ -111,7 +111,7 @@ void Entry(int num, string data) {
 		data.clear();
 	case 1:
 		if (data == "") { break; }
-		bcurrent = head;
+		bcurrent = bhead;
 		current = head;
 
 		bool moving = false;
