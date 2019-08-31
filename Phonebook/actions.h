@@ -289,10 +289,12 @@ struct node* deleteOne(struct node* start, string name) {
 	if (start == nullptr) return start;
 	
 	if (alphabet(name)) {
-		start->right = deleteOne(start->right, name);
+		start = start->right;
+		//deleteOne(start->right, name);
 	}
 	else {
-		start->left = deleteOne(start->left, name);
+		start = start->left;
+		//deleteOne(start->left, name);
 	}
 	if (start->input.firstName == name) {
 		if (start->right == nullptr) {
