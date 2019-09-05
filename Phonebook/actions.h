@@ -21,7 +21,7 @@ struct entry {
 	string hash;
 	string firstName;
 	//string middleInt; 
-	//string lastName;
+	string lastName;
 	//string phoneNumber;
 	//string DOB; day of birth
 	//string MOB; month of birth
@@ -49,7 +49,7 @@ void delFile(); //Deletes book.txt
 bool alphabet(string); //Determine left or right.
 void Entry(); //input to node (Only First Name);
 void Entry(int, string); //From file into memory.
-bool search(struct node*, string); //Search for name
+string search(struct node*, string); //Search for name
 void printAll(struct node*, int); //Prints entire tree.
 struct node* edit(struct node*, string); //Edits one node. 
 struct node* deleteOne(struct node*, string); //Deletes one user from the tree.
@@ -59,13 +59,14 @@ struct node* leastVal(struct node*);
 void checker(int, string);
 
 void rootConstructor() {
+
 	bhead->right = head;
 	bhead->left = head;
 
 	head->input.hash = "";
 	head->input.firstName = "Max"; //The untouchable.
 	//head->input.middleInt = "C";
-	//head->input.lastName = "Breamer";
+	head->input.lastName = "Breamer";
 	//head->input.phoneNumber = "1234567890";
 	//head->input.DOB = "1";
 	//head->input.MOB = "January";
@@ -105,16 +106,19 @@ void Entry(int num, string data) {
 	int i = 0;
 	string hashBuffer;
 	string no;
+	bool moving = false;
 	switch (num) {
 	case 0:
 		hashBuffer = data;
+		cout << data << endl;
 		data.clear();
 	case 1:
 		if (data == "") { break; }
+		if (data[0] == ',') data.erase(0,1);
 		bcurrent = bhead;
 		current = head;
 
-		bool moving = false;
+		
 		while (current != nullptr) {
 			if (alphabet(data)) {
 				bcurrent = current;
@@ -140,8 +144,12 @@ void Entry(int num, string data) {
 		current->input.hash = no;
 		current->input.firstName = data;
 		cout << current->input.hash << endl;
+		
+	case 2:
+		current->input.lastName = data;
 		cout << "\"" << data << "\" Done.\n" << endl;
 	}
+
 }
 
 void delFile() {
@@ -225,15 +233,15 @@ void Entry() {
 	current->input.hash = no;
 	current->input.firstName = buffer;
 	outfile << current->input.hash << ",";
-	outfile << current->input.firstName << "\n"; //<- Change to ',' later
-/*
+	outfile << current->input.firstName << ","; //<- Change to ',' later
+
 	//cout << "Middle Initial: ";
 	//cin >> current->input.middleInt;
 	//outfile << current->input.middleInt << ",";
 
-	//cout << "Last Name: ";
-	//cin >> current->input.lastName;
-	//outfile << current->input.lastName << ",";
+	cout << "Last Name: ";
+	cin >> current->input.lastName;
+	outfile << current->input.lastName << "\n";
 
 	//cout << "Phone Number: ";
 	//cin >> current->input.phoneNumber;
@@ -261,24 +269,12 @@ void Entry() {
 
 	//cout << "Occupation: ";
 	//cin >> current->input.occupation;
-	//outfile << current->input.occupation << ",";*/
+	//outfile << current->input.occupation << ",";
 	outfile.close();
 }
 
-bool search(struct node* start, string target) { //Needs case if there is more than 1 of the same.
-	current = start;
-	while (current != nullptr) {
-		if (current->input.firstName == target) { return true; }
-		else {
-			if (alphabet(target)) {
-				current = current->right;
-			}
-			else {
-				current = current->left;
-			}
-		}
-	}
-	return false;
+string search(struct node* start, string target) { //Needs case if there is more than 1 of the same.
+	return NULL;
 }
 
 struct node* edit(struct node* start, string name) {
@@ -287,38 +283,32 @@ struct node* edit(struct node* start, string name) {
 
 struct node* deleteOne(struct node* start, string name) {
 	if (start == nullptr) return start;
+	/*start = search(start, name);
 	
-	if (alphabet(name)) {
-		start = start->right;
-		//deleteOne(start->right, name);
-	}
-	else {
-		start = start->left;
-		//deleteOne(start->left, name);
-	}
 	if (start->input.firstName == name) {
-		if (start->right == nullptr) {
+		if (start->right == NULL) {
 			struct node *temp = start->left;
 			free(start);
 			return temp;
 		}
-		else if (start->left == nullptr) {
+		else if (start->left == NULL) {
 			struct node* temp = start->right;
 			free(start);
 			return temp;
 		}
-		struct node* temp = leastVal(start->left);
+		struct node* temp = leastVal(start->right);
 
 		start->input.firstName = temp->input.firstName;
-		free(temp);
+
+		start->right = search()
 	}
-	return start;
+	return start;*/
 }
 
 struct node* leastVal(struct node* start) {
 	struct node* temp = start;
 
-	while (temp && temp->left != nullptr)
+	while (temp && temp->left != NULL)
 		temp = temp->left;
 
 	return temp;
@@ -334,9 +324,9 @@ void printAll(struct node* start, int space) {
 	cout << endl;
 	for (int i = 5; i < space; i++)
 		cout << " ";
-	if (start->input.hash == "") { cout << "NULL, " << start->input.firstName << endl; }
-	else { cout << start->input.hash << ", " << start->input.firstName << endl; }
-	
+	if (start->input.hash == "") { cout << "NULL, " << start->input.firstName << " " << start->input.lastName << endl; }
+	else { cout << start->input.hash << ", " << start->input.firstName << " " << start->input.lastName << endl; }
+
 	printAll(start->left, space);
 }
 
@@ -345,7 +335,7 @@ void copyTree(struct node* start, ofstream& outfile) {
 
 	copyTree(start->left, outfile);
 	if (start->input.hash != "") {
-		outfile << start->input.hash << "," << start->input.firstName << endl;
+		outfile << start->input.hash << "," << start->input.firstName << "," << start->input.lastName << endl;
 	}
 	copyTree(start->right, outfile);
 }
@@ -355,8 +345,8 @@ void delTree(struct node* start) {
 
 	delTree(start->left);
 	delTree(start->right);
-	if (start->input.hash == "") { cout << "Deleting: " << "NULL, " << start->input.firstName << endl; }
-	else { cout << "Deleting: " << start->input.hash << ", " << start->input.firstName << endl; }
+	if (start->input.hash == "") { cout << "Deleting: " << "NULL, " << start->input.firstName << " " << start->input.lastName << endl; }
+	else { cout << "Deleting: " << start->input.hash << ", " << start->input.firstName << " " << start->input.lastName << endl; }
 	
 	free(start);
 }

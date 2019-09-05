@@ -1,7 +1,2 @@
-00,Alex
-001,Bruh
-0011,Bruh
-0,Jack
-1,Yunushan
-11,Zack
-111,loo
+0,John,Doe
+1,Tuesday,Night
