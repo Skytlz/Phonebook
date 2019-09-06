@@ -157,15 +157,15 @@ void delFile() {
 
 bool alphabet(string alpha) {
 	int alphaLength = alpha.length();
-	int nameLength = current->input.firstName.length();
+	int nameLength = current->input.lastName.length();
 
 	if (alphaLength < nameLength) {
 		for (int i = 0; i < alphaLength; i++) {
-			if (alpha.at(i) > current->input.firstName.at(i)) {
+			if (alpha.at(i) > current->input.lastName.at(i)) {
 				return true;
 				break;
 			}
-			else if (alpha.at(i) < current->input.firstName.at(i)) {
+			else if (alpha.at(i) < current->input.lastName.at(i)) {
 				return false;
 				break;
 			}
@@ -173,11 +173,11 @@ bool alphabet(string alpha) {
 	}
 	else if (alphaLength >= nameLength) {
 		for (int i = 0; i < nameLength; i++) {
-			if (alpha.at(i) < current->input.firstName.at(i)) {
+			if (alpha.at(i) < current->input.lastName.at(i)) {
 				return false;
 				break;
 			}
-			else if (alpha.at(i) > current->input.firstName.at(i)) {
+			else if (alpha.at(i) > current->input.lastName.at(i)) {
 				return true;
 				break;
 			}
@@ -188,13 +188,18 @@ bool alphabet(string alpha) {
 
 void Entry() {
 	ofstream outfile;
-	string buffer;
+	string abuffer;
+	string bbuffer;
 	string no;
 	outfile.open("book.txt", ios::out | ios::app);
 
 	cout << "First Name: ";
-	cin >> buffer;
-	
+	cin >> abuffer;
+
+
+	cout << "Last Name: ";
+	cin >> bbuffer;
+
 	int rightPointers = 0;
 	int leftPointers = 0;
 
@@ -203,7 +208,7 @@ void Entry() {
 
 	bool currentMove = false;
 	while (current != nullptr) {
-		if (alphabet(buffer)) {
+		if (alphabet(bbuffer)) {
 			bcurrent = current;
 			current = current->right;
 			no += '1';
@@ -230,9 +235,11 @@ void Entry() {
 	}
 
 	current->input.hash = no;
-	current->input.firstName = buffer;
+	current->input.firstName = abuffer;
+	current->input.lastName = bbuffer;
 	outfile << current->input.hash << ",";
-	outfile << current->input.firstName << ","; //<- Change to ',' later
+	outfile << current->input.lastName << ",";
+	outfile << current->input.firstName << "\n";
 
 	//cout << "Middle Initial: ";
 	//cin >> current->input.middleInt;
