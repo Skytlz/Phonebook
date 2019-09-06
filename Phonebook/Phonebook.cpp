@@ -35,9 +35,10 @@ int main() {
 		}
 		if (act == "2") {
 			string name = "";
+			int i = 0;
 			cout << "Enter the first name of the person you would like to find: ";
 			cin >> name;
-			cout << search(head, name) << endl;
+			search(head, name, i);
 		}
 		if (act == "3") {
 			cout << "Enter the first name of the person you would like to edit: ";

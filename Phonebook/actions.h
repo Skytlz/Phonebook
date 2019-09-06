@@ -11,6 +11,7 @@
 #include <vector>
 #include <iomanip>
 #include <algorithm>
+#include <ctype.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include "stdafx.h"
@@ -49,7 +50,7 @@ void delFile(); //Deletes book.txt
 bool alphabet(string); //Determine left or right.
 void Entry(); //input to node (Only First Name);
 void Entry(int, string); //From file into memory.
-string search(struct node*, string); //Search for name
+void search(struct node*, string, int); //Search for name
 void printAll(struct node*, int); //Prints entire tree.
 struct node* edit(struct node*, string); //Edits one node. 
 struct node* deleteOne(struct node*, string); //Deletes one user from the tree.
@@ -110,7 +111,6 @@ void Entry(int num, string data) {
 	switch (num) {
 	case 0:
 		hashBuffer = data;
-		cout << data << endl;
 		data.clear();
 	case 1:
 		if (data == "") { break; }
@@ -118,7 +118,6 @@ void Entry(int num, string data) {
 		bcurrent = bhead;
 		current = head;
 
-		
 		while (current != nullptr) {
 			if (alphabet(data)) {
 				bcurrent = current;
@@ -273,8 +272,18 @@ void Entry() {
 	outfile.close();
 }
 
-string search(struct node* start, string target) { //Needs case if there is more than 1 of the same.
-	return NULL;
+void search(struct node* start, string target, int i) {
+	if (start == nullptr) return;
+	search(start->right, target, i);
+	if (target == start->input.firstName || target == start->input.lastName) {
+		i++;
+		cout << i << "." << endl;
+		cout << "Hash: " << start->input.hash << endl;
+		cout << "First Name: " << start->input.firstName << endl;
+		cout << "Last Name: " << start->input.lastName << endl;
+		cout << endl;
+	}
+	search(start->left, target, i);
 }
 
 struct node* edit(struct node* start, string name) {
