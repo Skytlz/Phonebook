@@ -51,13 +51,14 @@ bool alphabet(string); //Determine left or right.
 void Entry(); //input to node (Only First Name);
 void Entry(int, string); //From file into memory.
 void search(struct node*, string, int); //Search for name
+string toLower(string); //Get string and make it all lowercase.
 void printAll(struct node*, int); //Prints entire tree.
 struct node* edit(struct node*, string); //Edits one node. 
 struct node* deleteOne(struct node*, string); //Deletes one user from the tree.
 void copyTree(struct node*, ofstream&); //Copies the Entire tree to file.
 void delTree(struct node*); //Deletes entire tree
-struct node* leastVal(struct node*);
-void checker(int, string);
+struct node* leastVal(struct node*); //Gets least value node on tree.
+void checker(int, string); //Checks
 
 void rootConstructor() {
 
@@ -65,9 +66,9 @@ void rootConstructor() {
 	bhead->left = head;
 
 	head->input.hash = "";
-	head->input.firstName = "Max"; //The untouchable.
+	head->input.firstName = "John"; //The untouchable.
 	//head->input.middleInt = "C";
-	head->input.lastName = "Breamer";
+	head->input.lastName = "Maxton";
 	//head->input.phoneNumber = "1234567890";
 	//head->input.DOB = "1";
 	//head->input.MOB = "January";
@@ -281,8 +282,8 @@ void Entry() {
 
 void search(struct node* start, string target, int i) {
 	if (start == nullptr) return;
-	search(start->right, target, i);
-	if (target == start->input.firstName || target == start->input.lastName) {
+	search(start->left, target, i);
+	if (toLower(target) == toLower(start->input.firstName) || toLower(target) == toLower(start->input.lastName)) {
 		i++;
 		cout << i << "." << endl;
 		cout << "Hash: " << start->input.hash << endl;
@@ -290,7 +291,23 @@ void search(struct node* start, string target, int i) {
 		cout << "Last Name: " << start->input.lastName << endl;
 		cout << endl;
 	}
-	search(start->left, target, i);
+	else if (toLower(target) != toLower(start->input.firstName) || toLower(target) != toLower(start->input.lastName)) {
+
+	}
+	search(start->right, target, i);
+}
+
+string toLower(string data) {
+	string lower;
+	for (int i = 0; i < data.length(); i++) {
+		if (data.at(i) >= 'A' && data.at(i) <= 'Z') {
+			lower += data.at(i) + 32;
+		}
+		else {
+			lower += data.at(i);
+		}
+	}
+	return lower;
 }
 
 struct node* edit(struct node* start, string name) {
@@ -340,8 +357,8 @@ void printAll(struct node* start, int space) {
 	cout << endl;
 	for (int i = 5; i < space; i++)
 		cout << " ";
-	if (start->input.hash == "") { cout << "NULL, " << start->input.firstName << " " << start->input.lastName << endl; }
-	else { cout << start->input.hash << ", " << start->input.firstName << " " << start->input.lastName << endl; }
+	if (start->input.hash == "") { cout << "NULL, " << start->input.lastName << ", " << start->input.firstName << endl; }
+	else { cout << start->input.hash << ", " << start->input.lastName << ", " << start->input.firstName << endl; }
 
 	printAll(start->left, space);
 }
@@ -351,7 +368,7 @@ void copyTree(struct node* start, ofstream& outfile) {
 
 	copyTree(start->left, outfile);
 	if (start->input.hash != "") {
-		outfile << start->input.hash << "," << start->input.firstName << "," << start->input.lastName << endl;
+		outfile << start->input.hash << "," << start->input.lastName << "," << start->input.firstName << endl;
 	}
 	copyTree(start->right, outfile);
 }
@@ -361,8 +378,8 @@ void delTree(struct node* start) {
 
 	delTree(start->left);
 	delTree(start->right);
-	if (start->input.hash == "") { cout << "Deleting: " << "NULL, " << start->input.firstName << " " << start->input.lastName << endl; }
-	else { cout << "Deleting: " << start->input.hash << ", " << start->input.firstName << " " << start->input.lastName << endl; }
+	if (start->input.hash == "") { cout << "Deleting: " << "NULL, " << start->input.lastName << ", " << start->input.firstName << endl; }
+	else { cout << "Deleting: " << start->input.hash << ", " << start->input.lastName << ", " << start->input.firstName << endl; }
 	
 	free(start);
 }
