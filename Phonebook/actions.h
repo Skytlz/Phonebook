@@ -11,7 +11,6 @@
 #include <vector>
 #include <iomanip>
 #include <algorithm>
-#include <ctype.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include "stdafx.h"
@@ -246,10 +245,6 @@ void Entry() {
 	//cin >> current->input.middleInt;
 	//outfile << current->input.middleInt << ",";
 
-	cout << "Last Name: ";
-	cin >> current->input.lastName;
-	outfile << current->input.lastName << "\n";
-
 	//cout << "Phone Number: ";
 	//cin >> current->input.phoneNumber;
 	//outfile << current->input.phoneNumber << ",";
@@ -292,20 +287,36 @@ void search(struct node* start, string target, int i) {
 		cout << endl;
 	}
 	else if (toLower(target) != toLower(start->input.firstName) || toLower(target) != toLower(start->input.lastName)) {
-
+		for (int i = 0; i < start->input.firstName.length(); i++) {
+			if (toLower(target) == start->input.firstName.substr(i, (target.length()) + (i - (i + 1)))) {
+				i++;
+				cout << i << "." << endl;
+				cout << "Hash: " << start->input.hash << endl;
+				cout << "First Name: " << start->input.firstName << endl;
+				cout << "Last Name: " << start->input.lastName << endl;
+				cout << endl;
+			}
+		for (int i = 0; i < start->input.lastName.length(); i++) {
+			if (toLower(target) == start->input.lastName.substr(i, (target.length()) + (i - (i + 1)))) {
+				i++;
+				cout << i << "." << endl;
+				cout << "Hash: " << start->input.hash << endl;
+				cout << "First Name: " << start->input.firstName << endl;
+				cout << "Last Name: " << start->input.lastName << endl;
+				cout << endl;
+				}
+			}
+		}
 	}
 	search(start->right, target, i);
 }
 
+
 string toLower(string data) {
 	string lower;
 	for (int i = 0; i < data.length(); i++) {
-		if (data.at(i) >= 'A' && data.at(i) <= 'Z') {
-			lower += data.at(i) + 32;
-		}
-		else {
-			lower += data.at(i);
-		}
+		if (data.at(i) >= 'A' && data.at(i) <= 'Z') { lower += data.at(i) + 32; }
+		else {	lower += data.at(i); }
 	}
 	return lower;
 }

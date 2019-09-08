@@ -68,6 +68,10 @@ int main() {
 		}
 
 		if (act == "7") {
+			ofstream outfile;
+			delFile();
+			copyTree(head, outfile);
+			outfile.close();
 			delTree(head);
 			head = NULL;
 			return 0;
