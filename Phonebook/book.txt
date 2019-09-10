@@ -1,2 +1,3 @@
-1,Squigley,Jack
-0,Lacker,Zack
+0,Blevins,Jack
+01,Lockjaw,Zack
+010,Lacker,Rack

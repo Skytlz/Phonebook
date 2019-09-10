@@ -287,25 +287,24 @@ void search(struct node* start, string target, int i) {
 		cout << endl;
 	}
 	else if (toLower(target) != toLower(start->input.firstName) || toLower(target) != toLower(start->input.lastName)) {
-		for (int i = 0; i < start->input.firstName.length(); i++) {
-			if (toLower(target) == start->input.firstName.substr(i, (target.length()) + (i - (i + 1)))) {
-				i++;
-				cout << i << "." << endl;
-				cout << "Hash: " << start->input.hash << endl;
-				cout << "First Name: " << start->input.firstName << endl;
-				cout << "Last Name: " << start->input.lastName << endl;
-				cout << endl;
-			}
-		for (int i = 0; i < start->input.lastName.length(); i++) {
-			if (toLower(target) == start->input.lastName.substr(i, (target.length()) + (i - (i + 1)))) {
-				i++;
-				cout << i << "." << endl;
-				cout << "Hash: " << start->input.hash << endl;
-				cout << "First Name: " << start->input.firstName << endl;
-				cout << "Last Name: " << start->input.lastName << endl;
-				cout << endl;
-				}
-			}
+		size_t found;
+		found = toLower(start->input.firstName).find(toLower(target));
+		if (found != string::npos) {
+			i++;
+			cout << i << "." << endl;
+			cout << "Hash: " << start->input.hash << endl;
+			cout << "First Name: " << start->input.firstName << endl;
+			cout << "Last Name: " << start->input.lastName << endl;
+			cout << endl;
+		}
+		found = toLower(start->input.lastName).find(toLower(target));
+		if (found != string::npos) {
+			i++;
+			cout << i << "." << endl;
+			cout << "Hash: " << start->input.hash << endl;
+			cout << "First Name: " << start->input.firstName << endl;
+			cout << "Last Name: " << start->input.lastName << endl;
+			cout << endl;
 		}
 	}
 	search(start->right, target, i);
