@@ -141,11 +141,11 @@ void Entry(int num, string data) {
 			current = bcurrent->left;
 		}
 		current->input.hash = no;
-		current->input.firstName = data;
+		current->input.lastName = data;
 		cout << current->input.hash << endl;
 		
 	case 2:
-		current->input.lastName = data;
+		current->input.firstName = data;
 		cout << "\"" << data << "\" Done.\n" << endl;
 	}
 
