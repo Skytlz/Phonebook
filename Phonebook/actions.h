@@ -297,16 +297,20 @@ void search(struct node* start, string target, int i) {
 			cout << "Last Name: " << start->input.lastName << endl;
 			cout << endl;
 		}
-		found = toLower(start->input.lastName).find(toLower(target));
-		if (found != string::npos) {
-			i++;
-			cout << i << "." << endl;
-			cout << "Hash: " << start->input.hash << endl;
-			cout << "First Name: " << start->input.firstName << endl;
-			cout << "Last Name: " << start->input.lastName << endl;
-			cout << endl;
+		else if (found == string::npos) {
+			found = toLower(start->input.lastName).find(toLower(target));
+			if (found != string::npos) {
+				i++;
+				cout << i << "." << endl;
+				cout << "Hash: " << start->input.hash << endl;
+				cout << "First Name: " << start->input.firstName << endl;
+				cout << "Last Name: " << start->input.lastName << endl;
+				cout << endl;
+			}
 		}
+		
 	}
+	
 	search(start->right, target, i);
 }
 
