@@ -310,14 +310,13 @@ void search(struct node* start, string target, int i) {
 		}
 		
 	}
-	
 	search(start->right, target, i);
 }
 
 
 string toLower(string data) {
 	string lower;
-	for (int i = 0; i < data.length(); i++) {
+	for (size_t i = 0; i < data.length(); i++) {
 		if (data.at(i) >= 'A' && data.at(i) <= 'Z') { lower += data.at(i) + 32; }
 		else {	lower += data.at(i); }
 	}
@@ -328,11 +327,16 @@ struct node* edit(struct node* start, string name) {
 	if (start == nullptr) return start;
 }
 
-struct node* deleteOne(struct node* start, string name) {
-	if (start == nullptr) return start;
-	/*start = search(start, name);
+struct node* deleteOne(struct node* start, string hashVal) {
+	if (start == nullptr) return start; //base case
 	
-	if (start->input.firstName == name) {
+	//find node here.
+	for (size_t i = 0; i < hashVal.length(); i++) {
+		if (hashVal.at(i) == '1') { start = start->right; }
+		else if (hashVal.at(i) == '0') { start = start->left; }
+	}
+	
+	if (start->input.hash == hashVal) { //if to find none or 1 subtree.
 		if (start->right == NULL) {
 			struct node *temp = start->left;
 			free(start);
@@ -343,13 +347,15 @@ struct node* deleteOne(struct node* start, string name) {
 			free(start);
 			return temp;
 		}
+		
 		struct node* temp = leastVal(start->right);
 
 		start->input.firstName = temp->input.firstName;
+		start->input.lastName = temp->input.lastName;
 
-		start->right = search()
+		start->right = deleteOne(start->right, temp->input.hash);
 	}
-	return start;*/
+	return start;
 }
 
 struct node* leastVal(struct node* start) {

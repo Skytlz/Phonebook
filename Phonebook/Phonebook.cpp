@@ -36,22 +36,27 @@ int main() {
 		if (act == "2") {
 			string name = "";
 			int i = 0;
-			cout << "Enter the first name of the person you would like to find: ";
+			cout << "Search: ";
 			cin >> name;
 			search(head, name, i);
 		}
 		if (act == "3") {
-			cout << "Enter the first name of the person you would like to edit: ";
+			cout << "Search: ";
 			string name = "";
 			cin >> name;
 			edit(head, name);
 		}
 		if (act == "4") {
+			int i = 0;
 			ofstream outfile;
-			cout << "Enter the first name of the person you would like to delete: ";
+			cout << "Search (del): ";
 			string name = "";
 			cin >> name;
-			cout << deleteOne(head, name) << endl;
+			search(head, name, i);
+			cout << "Please enter the Hash you would like to delete: ";
+			string no;
+			cin >> no;
+			cout << deleteOne(head, no) << endl;
 			cout << head << endl;
 			delFile();
 			outfile.open("book.txt", ios::app);

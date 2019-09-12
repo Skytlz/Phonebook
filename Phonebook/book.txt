@@ -1,3 +1,1 @@
 0,Blevins,Jack
-01,Lockjaw,Zack
-010,Lacker,Rack
