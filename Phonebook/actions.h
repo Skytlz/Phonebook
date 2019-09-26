@@ -49,6 +49,7 @@ void delFile(); //Deletes book.txt
 bool alphabet(string); //Determine left or right.
 void Entry(); //input to node (Only First Name);
 void Entry(int, string); //From file into memory.
+struct node* search(struct node*, string); //hash to name
 void search(struct node*, string, int); //Search for name
 string toLower(string); //Get string and make it all lowercase.
 void printAll(struct node*, int); //Prints entire tree.
@@ -274,6 +275,12 @@ void Entry() {
 	//outfile << current->input.occupation << ",";
 	outfile.close();
 }
+struct node* search(struct node* start, string hash) {
+	if (start == NULL) { return start; }
+	start->left = search(start->left, hash);
+	if (start->input.hash == hash) { return start; }
+	start->right = search(start->right, hash);
+}
 
 void search(struct node* start, string target, int i) {
 	if (start == nullptr) return;
@@ -327,16 +334,14 @@ struct node* edit(struct node* start, string name) {
 	if (start == nullptr) return start;
 }
 
-struct node* deleteOne(struct node* start, string hashVal) {
-	if (start == nullptr) return start; //base case
-	
+struct node* deleteOne(struct node* start, string name) {
+	if (start == NULL) return start; //base case
+
 	//find node here.
-	for (size_t i = 0; i < hashVal.length(); i++) {
-		if (hashVal.at(i) == '1') { start = start->right; }
-		else if (hashVal.at(i) == '0') { start = start->left; }
-	}
+	if (alphabet(name)) { start->right = deleteOne(start->right, name); }
+	else { start->left = deleteOne(start->left, name); }
 	
-	if (start->input.hash == hashVal) { //if to find none or 1 subtree.
+	if (start->input.lastName == name) { //if to find none or 1 subtree.
 		if (start->right == NULL) {
 			struct node *temp = start->left;
 			free(start);
@@ -352,8 +357,10 @@ struct node* deleteOne(struct node* start, string hashVal) {
 
 		start->input.firstName = temp->input.firstName;
 		start->input.lastName = temp->input.lastName;
+		cout << temp->input.hash;
 
-		start->right = deleteOne(start->right, temp->input.hash);
+		
+		start->right = deleteOne(head, temp->input.lastName);
 	}
 	return start;
 }
@@ -388,6 +395,7 @@ void copyTree(struct node* start, ofstream& outfile) {
 
 	copyTree(start->left, outfile);
 	if (start->input.hash != "") {
+		cout << "Copying:" << start->input.hash << "," << start->input.lastName << "," << start->input.firstName << endl;
 		outfile << start->input.hash << "," << start->input.lastName << "," << start->input.firstName << endl;
 	}
 	copyTree(start->right, outfile);
