@@ -335,32 +335,31 @@ struct node* edit(struct node* start, string name) {
 }
 
 struct node* deleteOne(struct node* start, string name) {
-	if (start == NULL) return start; //base case
-
-	//find node here.
-	if (alphabet(name)) { start->right = deleteOne(start->right, name); }
-	else { start->left = deleteOne(start->left, name); }
+	if (start == NULL) return start;
 	
-	if (start->input.lastName == name) { //if to find none or 1 subtree.
-		if (start->right == NULL) {
-			struct node *temp = start->left;
-			free(start);
-			return temp;
-		}
-		else if (start->left == NULL) {
+	if (alphabet(name)) {
+		start->right = deleteOne(start->right, name);
+	}
+	else { 
+		start->left = deleteOne(start->left, name); 
+	}
+
+	if (start->input.lastName == name) {
+		if (start->left == NULL){
 			struct node* temp = start->right;
 			free(start);
 			return temp;
 		}
-		
+		else if (start->left == NULL) {
+			struct node* temp = start->left;
+			free(start);
+			return temp;
+		}
 		struct node* temp = leastVal(start->right);
-
 		start->input.firstName = temp->input.firstName;
 		start->input.lastName = temp->input.lastName;
-		cout << temp->input.hash;
 
-		
-		start->right = deleteOne(head, temp->input.lastName);
+		//start->right = deleteOne(start->right, temp->input.lastName);
 	}
 	return start;
 }

@@ -57,6 +57,7 @@ int main() {
 			string no;
 			cin >> no;
 			string delName = search(head, no)->input.lastName;
+
 			cout << deleteOne(head, delName) << endl;
 			cout << head << endl;
 			/*delFile();
