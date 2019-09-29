@@ -1,2 +1,7 @@
 0,Gourly,Jack
 1,Nixon,Richard
+00,Alford,Alex
+10,Night,Tuesday
+101,Night,Friday
+100,Mom,You're
+001,Cole,Caleb

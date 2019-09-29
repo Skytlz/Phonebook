@@ -276,10 +276,12 @@ void Entry() {
 	outfile.close();
 }
 struct node* search(struct node* start, string hash) {
-	if (start == NULL) { return start; }
-	start->left = search(start->left, hash);
+	if (start == NULL) return NULL;
+
 	if (start->input.hash == hash) { return start; }
-	start->right = search(start->right, hash);
+	node* temp = search(start->right, hash);
+	if (temp != NULL) return temp;
+	return search(start->left, hash);
 }
 
 void search(struct node* start, string target, int i) {
@@ -342,7 +344,7 @@ struct node* deleteOne(struct node* start, string name) {
 	}
 	else { 
 		start->left = deleteOne(start->left, name); 
-	}
+}
 
 	if (start->input.lastName == name) {
 		if (start->left == NULL){
@@ -350,7 +352,7 @@ struct node* deleteOne(struct node* start, string name) {
 			free(start);
 			return temp;
 		}
-		else if (start->left == NULL) {
+		else if (start->right == NULL) {
 			struct node* temp = start->left;
 			free(start);
 			return temp;
@@ -359,7 +361,7 @@ struct node* deleteOne(struct node* start, string name) {
 		start->input.firstName = temp->input.firstName;
 		start->input.lastName = temp->input.lastName;
 
-		//start->right = deleteOne(start->right, temp->input.lastName);
+		start->right = deleteOne(start->right, temp->input.lastName);
 	}
 	return start;
 }
