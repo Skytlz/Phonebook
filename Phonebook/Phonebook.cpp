@@ -60,7 +60,11 @@ int main() {
 			deleteOne(head, delName);
 			delFile();
 			outfile.open("book.txt", ios::app);
-			copyTree(head, outfile);
+			int n = depth(head) - 1;
+			for (int i = 0; i <= n; i++) {
+				copyTree(head, outfile, i);
+			}
+
 			reHash(head);
 		}
 		if (act == "5") { printAll(head,0);}
@@ -79,6 +83,14 @@ int main() {
 		}
 		if (act == "8") {
 			reHash(head);
+		}
+		if (act == "9") {
+			int n = depth(head)-1;
+			ofstream outfile;
+			for (int i = 0; i <= n; i++) {
+				copyTree(head, outfile, i);
+			}
+			
 		}
 	}
 }

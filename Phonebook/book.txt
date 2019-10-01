@@ -1,0 +1,13 @@
+0,Gurley,Jack
+1,Obama,Barack
+00,Bell,Taco
+01,Hinkhouse,Sam
+10,Nixon,Richard
+11,Rolseth,Olin
+000,Beam,Max
+001,Cole,Caleb
+100,Night,Tuesday
+110,Reaves,Keanu
+0000,Baird,Emily
+0011,Emerson,Michael
+00111,Gulsen,Yunushan

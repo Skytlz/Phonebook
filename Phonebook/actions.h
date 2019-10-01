@@ -55,7 +55,8 @@ string toLower(string); //Get string and make it all lowercase.
 void printAll(struct node*, int); //Prints entire tree.
 struct node* edit(struct node*, string); //Edits one node. 
 struct node* deleteOne(struct node*, string); //Deletes one user from the tree.
-void copyTree(struct node*, ofstream&); //Copies the Entire tree to file.
+void copyTree(struct node*, ofstream&, int); //Copies the Entire tree to file.
+int depth(struct node*); //Find max depth of tree.
 void delTree(struct node*); //Deletes entire tree
 struct node* leastVal(struct node*); //Gets least value node on tree.
 void checker(int, string); //Checks
@@ -391,15 +392,28 @@ void printAll(struct node* start, int space) {
 	printAll(start->left, space);
 }
 
-void copyTree(struct node* start, ofstream& outfile) {
+void copyTree(struct node* start, ofstream& outfile, int n) {
 	if (start == nullptr) return;
-
-	copyTree(start->left, outfile);
-	if (start->input.hash != "") {
+	
+	if (start->input.hash != "" && n == 0) {
 		cout << "Copying:" << start->input.hash << "," << start->input.lastName << "," << start->input.firstName << endl;
 		outfile << start->input.hash << "," << start->input.lastName << "," << start->input.firstName << endl;
 	}
-	copyTree(start->right, outfile);
+	else {
+		copyTree(start->left, outfile, n - 1);
+		copyTree(start->right, outfile, n - 1);
+	}
+	
+}
+int depth(struct node* start) {
+	if (start == NULL) return 0;
+	else {
+		int leftD = depth(start->left);
+		int rightD = depth(start->right);
+
+		if (leftD > rightD) return (leftD + 1);
+		else return (rightD + 1);
+	}
 }
 
 void delTree(struct node* start) {
