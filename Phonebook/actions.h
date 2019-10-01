@@ -317,12 +317,15 @@ void search(struct node* start, string target, int i) {
 				cout << "Last Name: " << start->input.lastName << endl;
 				cout << endl;
 			}
+			/*else if (found == string::npos) {
+				cout << "Could not find person \n";
+				cout << "Type NULL" << endl;
+			}*/
 		}
 		
 	}
 	search(start->right, target, i);
 }
-
 
 string toLower(string data) {
 	string lower;
@@ -338,7 +341,8 @@ struct node* edit(struct node* start, string name) {
 }
 
 struct node* deleteOne(struct node* start, string name) {
-	if (start == NULL) return start;
+	if (start == NULL)
+		return start;
 	
 	if (alphabet(name)) {
 		start->right = deleteOne(start->right, name);
@@ -347,7 +351,7 @@ struct node* deleteOne(struct node* start, string name) {
 		start->left = deleteOne(start->left, name); 
 	}
 
-	if (start->input.lastName == name) {
+	if (toLower(start->input.lastName) == toLower(name)) {
 		if (start->left == NULL){
 			struct node* temp = start->right;
 			free(start);

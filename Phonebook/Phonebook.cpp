@@ -56,16 +56,19 @@ int main() {
 			cout << "Please enter the Hash you would like to delete: ";
 			string no;
 			cin >> no;
-			string delName = search(head, no)->input.lastName;
-			deleteOne(head, delName);
-			delFile();
-			outfile.open("book.txt", ios::app);
-			int n = depth(head) - 1;
-			for (int i = 0; i <= n; i++) {
-				copyTree(head, outfile, i);
-			}
+			if (no != "NULL" || "null") {
+				string delName = search(head, no)->input.lastName;
+				deleteOne(head, delName);
+				delFile();
+				outfile.open("book.txt", ios::app);
+				int n = depth(head) - 1;
+				for (int i = 0; i <= n; i++) {
+					copyTree(head, outfile, i);
+				}
 
-			reHash(head);
+				reHash(head);
+			}
+			
 		}
 		if (act == "5") { printAll(head,0);}
 
