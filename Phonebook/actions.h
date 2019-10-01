@@ -342,9 +342,9 @@ struct node* deleteOne(struct node* start, string name) {
 	if (alphabet(name)) {
 		start->right = deleteOne(start->right, name);
 	}
-	else { 
+	else{
 		start->left = deleteOne(start->left, name); 
-}
+	}
 
 	if (start->input.lastName == name) {
 		if (start->left == NULL){

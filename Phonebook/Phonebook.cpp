@@ -57,12 +57,10 @@ int main() {
 			string no;
 			cin >> no;
 			string delName = search(head, no)->input.lastName;
-
 			deleteOne(head, delName);
-			
-			/*delFile();
+			delFile();
 			outfile.open("book.txt", ios::app);
-			copyTree(head, outfile);*/
+			copyTree(head, outfile);
 			reHash(head);
 		}
 		if (act == "5") { printAll(head,0);}
