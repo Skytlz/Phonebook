@@ -1,9 +1,6 @@
 0,Hinkhouse,Sam
-1,Reaves,Keanu
-00,Emerson,Michael
 10,Nixon,Richard
-11,Rolseth,Olin
-000,Beam,Max
-0011,Gulsen,Yunushan
+00,Gulsen,Yunushan
 100,Night,Tuesday
 101,Obama,Barack
+000,Beam,Max

@@ -53,7 +53,7 @@ struct node* search(struct node*, string); //hash to name
 void search(struct node*, string, int); //Search for name
 string toLower(string); //Get string and make it all lowercase.
 void printAll(struct node*, int); //Prints entire tree.
-struct node* edit(struct node*, string); //Edits one node. 
+struct node* edit(struct node*, string, string, int); //Edits one node. 
 struct node* deleteOne(struct node*, string); //Deletes one user from the tree.
 void copyTree(struct node*, ofstream&, int); //Copies the Entire tree to file.
 int depth(struct node*); //Find max depth of tree.
@@ -336,13 +336,64 @@ string toLower(string data) {
 	return lower;
 }
 
-struct node* edit(struct node* start, string name) {
-	if (start == nullptr) return start;
+struct node* edit(struct node* start, string editName, string newName, int num) {
+	if (start == nullptr || num > 10) return start;
+
+	if (alphabet(editName)) {
+		start->right = edit(start->right, editName, newName, num);
+	}
+	else {
+		start->left = edit(start->left, editName, editName, num);
+	}
+	if (toLower(start->input.firstName) == toLower(editName) || toLower(start->input.lastName) == toLower(editName)) {
+		if (num == 3) {
+			string no;
+			bcurrent = bhead;
+			current = head;
+			bool moving = false;
+			while (current != nullptr) {
+				if (alphabet(newName)) {
+					bcurrent = current;
+					current = current->right;
+					no += '1';
+					moving = true;
+				}
+				else {
+					bcurrent = current;
+					current = current->left;
+					no += '0';
+					moving = false;
+				}
+			}
+			if (moving) {
+				bcurrent->right = new node;
+				current = bcurrent->right;
+			}
+			else {
+				bcurrent->left = new node;
+				current = bcurrent->left;
+			}
+			current->input.firstName = start->input.firstName;
+			current->input.lastName = newName;
+			current->input.hash = no;
+		}
+		else {
+			if (num == 1) { start->input.firstName = newName; }
+			/*if (num == 2) {}
+			if (num == 4) {}
+			if (num == 5) {}
+			if (num == 6) {}
+			if (num == 7) {}
+			if (num == 8) {}
+			if (num == 9) {}
+			if (num == 10) {}*/
+		}
+	}
+	
 }
 
 struct node* deleteOne(struct node* start, string name) {
-	if (start == NULL)
-		return start;
+	if (start == NULL) return start;
 	
 	if (alphabet(name)) {
 		start->right = deleteOne(start->right, name);

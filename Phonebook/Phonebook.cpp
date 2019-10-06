@@ -41,10 +41,61 @@ int main() {
 			search(head, name, i);
 		}
 		if (act == "3") {
-			cout << "Search: ";
+			int i = 0;
+			int num;
+			ofstream outfile;
+			cout << "Search (Edit): ";
 			string name = "";
 			cin >> name;
-			edit(head, name);
+			search(head, name, i);
+			cout << "Please enter the hash you would like to edit: ";
+			string no;
+			cin >> no;
+			if (no != "NULL" || "null") {
+				cout << "1. First Name" << endl;
+				//cout << "2. Middle Initial" << endl;
+				cout << "3. Last Name" << endl;
+				//cout << "4. Phonenumber" << endl;
+				//cout << "5. Day of Birth" << endl;
+				//cout << "6. Month of Birth" << endl;
+				//cout << "7. Year of Birth" << endl;
+				//cout << "8. Home address" << endl;
+				//cout << "9. Email adress" << endl;
+				//cout << "10. Occupation" << endl;
+				cout << "What would you like to edit (number): ";
+				cin >> num;
+				if (num == 1) {
+					cout << "Enter new name: " << endl;
+					string newName;
+					cin >> newName;
+					string editNode = search(head, no)->input.firstName;
+					edit(head, editNode, newName, num);
+					
+				//if (num == 2) {}
+				if (num == 3) {
+					cout << "Enter new name: " << endl;
+					string newName;
+					cin >> newName;
+					string editNode = search(head, no)->input.lastName;
+					edit(head, editNode, newName, num);
+					deleteOne(head, editNode);
+					delFile();
+					outfile.open("book.txt", ios::app);
+					int n = depth(head) - 1;
+					for (int i = 0; i <= n; i++) {
+						copyTree(head, outfile, i);
+					}
+					reHash(head);
+				}
+				}
+				//if (num == 4) {}
+				//if (num == 5) {}
+				//if (num == 6) {}
+				//if (num == 7) {}
+				//if (num == 8) {}
+				//if (num == 9) {}
+				//if (num == 10) {}	
+			}
 		}
 		if (act == "4") {
 			int i = 0;
