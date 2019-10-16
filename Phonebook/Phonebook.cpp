@@ -65,15 +65,16 @@ int main() {
 				cout << "What would you like to edit (number): ";
 				cin >> num;
 				if (num == 1) {
-					cout << "Enter new name: " << endl;
+					cout << "Enter new first name: ";
 					string newName;
 					cin >> newName;
-					string editNode = search(head, no)->input.firstName;
+					string editNode = search(head, no)->input.lastName;
+					cout << num;
 					edit(head, editNode, newName, num);
 					
 				//if (num == 2) {}
 				if (num == 3) {
-					cout << "Enter new name: " << endl;
+					cout << "Enter new last name: ";
 					string newName;
 					cin >> newName;
 					string editNode = search(head, no)->input.lastName;

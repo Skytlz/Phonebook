@@ -53,7 +53,7 @@ struct node* search(struct node*, string); //hash to name
 void search(struct node*, string, int); //Search for name
 string toLower(string); //Get string and make it all lowercase.
 void printAll(struct node*, int); //Prints entire tree.
-struct node* edit(struct node*, string, string, int); //Edits one node. 
+void edit(struct node*, string, string, int); //Edits one node. 
 struct node* deleteOne(struct node*, string); //Deletes one user from the tree.
 void copyTree(struct node*, ofstream&, int); //Copies the Entire tree to file.
 int depth(struct node*); //Find max depth of tree.
@@ -336,15 +336,13 @@ string toLower(string data) {
 	return lower;
 }
 
-struct node* edit(struct node* start, string editName, string newName, int num) {
-	if (start == nullptr || num > 10) return start;
+void edit(struct node* start, string editName, string newName, int num) {
+	if (start == nullptr || num > 10) return;
 
-	if (alphabet(editName)) {
-		start->right = edit(start->right, editName, newName, num);
-	}
-	else {
-		start->left = edit(start->left, editName, editName, num);
-	}
+		edit(start->right, editName, newName, num);
+
+		edit(start->left, editName, newName, num);
+
 	if (toLower(start->input.firstName) == toLower(editName) || toLower(start->input.lastName) == toLower(editName)) {
 		if (num == 3) {
 			string no;
@@ -378,7 +376,7 @@ struct node* edit(struct node* start, string editName, string newName, int num) 
 			current->input.hash = no;
 		}
 		else {
-			if (num == 1) { start->input.firstName = newName; }
+			if (num == 1) { start->input.firstName = newName;}
 			/*if (num == 2) {}
 			if (num == 4) {}
 			if (num == 5) {}
