@@ -1,13 +1,13 @@
-0,Gurley,Jack
-00,Bell,Taco
-001,Cole,Caleb
-0011,Emerson,Michael
-01,Hinkhouse,Sam
-1,Obama,Barack
-11,Rolseth,Olin
-10,Nixon,Richard
-100,Night,Tuesday
-00111,Gulsen,Yunushan
-000,Beam,Max
-0000,Baird,Emily
-110,Reaves,Keanu
+11, Rolseth, Olin
+110, Reaves, Keanu
+1, Obama, Barack
+10, Nixon, Richard
+100, Night, Tuesday
+01, Hinkhouse, Sam
+0, Gurley, Jack
+00111, Gulsen, Yunushan
+0011, Emerson, Michael
+001, Cole, Caleb
+00, Bell, Taco
+000, Beam, Max
+0000, Baird, Emily

@@ -108,6 +108,7 @@ int main() {
 			cout << "Please enter the Hash you would like to delete: ";
 			string no;
 			cin >> no;
+			current = head;
 			if (no != "NULL" || "null") {
 				string delName = search(head, no)->input.lastName;
 				deleteOne(head, delName);
@@ -117,7 +118,6 @@ int main() {
 				for (int i = 0; i <= n; i++) {
 					copyTree(head, outfile, i);
 				}
-
 				reHash(head);
 			}
 			

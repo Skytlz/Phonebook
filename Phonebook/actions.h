@@ -160,6 +160,7 @@ void delFile() {
 bool alphabet(string alpha) {
 	int alphaLength = alpha.length();
 	int nameLength = current->input.lastName.length();
+	cout << current->input.lastName << endl;
 
 	if (alphaLength < nameLength) {
 		for (int i = 0; i < alphaLength; i++) {
@@ -391,17 +392,21 @@ void edit(struct node* start, string editName, string newName, int num) {
 }
 
 struct node* deleteOne(struct node* start, string name) {
-	if (start == NULL) return start;
-	
+	if (start == NULL)
+		return start;
+
+	current = start;
 	if (alphabet(name)) {
+		cout << name << endl;
 		start->right = deleteOne(start->right, name);
 	}
 	else{
-		start->left = deleteOne(start->left, name); 
+		cout << name << endl;
+		start->left = deleteOne(start->left, name);
 	}
 
 	if (toLower(start->input.lastName) == toLower(name)) {
-		if (start->left == NULL){
+		if (start->left == NULL) {
 			struct node* temp = start->right;
 			free(start);
 			return temp;
@@ -418,6 +423,7 @@ struct node* deleteOne(struct node* start, string name) {
 		start->right = deleteOne(start->right, temp->input.lastName);
 	}
 	return start;
+
 }
 
 struct node* leastVal(struct node* start) {
