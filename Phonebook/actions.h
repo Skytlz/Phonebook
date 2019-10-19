@@ -296,7 +296,7 @@ void Entry() {
 	
 	cout << "Phone Number (add area code): ";
 	cin >> pbuffer;
-	if (pbuffer.length != 10) {
+	if (pbuffer.length() != 10) {
 		cout << "Must be 10 digits." << endl;
 		cout << "Enter again: ";
 		cin >> pbuffer;
@@ -318,7 +318,7 @@ void Entry() {
 
 		cout << "Year of Birth (yyyy format): ";
 		cin >> ybuffer;
-		if (ybuffer.length != 4) {
+		if (ybuffer.length() != 4) {
 			cout << "Please enter a valid year (4 digits)";
 			cout << "Year of Birth: ";
 			cin >> ybuffer;
