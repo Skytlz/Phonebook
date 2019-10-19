@@ -20,15 +20,15 @@ using namespace std;
 struct entry {
 	string hash;
 	string firstName;
-	//string middleInt; 
+	string middleInt; 
 	string lastName;
-	//string phoneNumber;
-	//string DOB; day of birth
-	//string MOB; month of birth
-	//string YOB; year of birth
-	//string hAddress; Home
-	//string eAddress; Email
-	//string occupation;
+	string phoneNumber;
+	string MOB;// month of birth
+	string DOB; //day of birth
+	string YOB; //year of birth
+	string hAddress; //Home
+	string eAddress; //Email
+	string occupation;
 };
 
 struct node {
@@ -44,6 +44,7 @@ node* bhead = new node;
 node* head = new node;
 
 void rootConstructor(); //Constructs the head
+bool isValidDate(string, string, string); //Checks to see if day given is valid.
 void fromFile(); //Read from file
 void delFile(); //Deletes book.txt
 bool alphabet(string); //Determine left or right.
@@ -68,15 +69,45 @@ void rootConstructor() {
 
 	head->input.hash = "";
 	head->input.firstName = "John"; //The untouchable.
-	//head->input.middleInt = "C";
+	head->input.middleInt = "C";
 	head->input.lastName = "Maxton";
-	//head->input.phoneNumber = "1234567890";
-	//head->input.DOB = "1";
-	//head->input.MOB = "January";
-	//head->input.YOB = "1980";
-	//head->input.hAddress = "123 Fake St";
-	//head->input.eAddress = "johnEDoe@skytlz.com";
-	//head->input.occupation = "Man";
+	head->input.phoneNumber = "1234567890";
+	head->input.DOB = "1";
+	head->input.MOB = "January";
+	head->input.YOB = "1970";
+	head->input.hAddress = "123 Fake St";
+	head->input.eAddress = "johnEDoe@skytlz.com";
+	head->input.occupation = "Man";
+}
+bool isValidDate(string month, string day, string year) {
+	const int maxYr = 9999;
+	const int minYr = 1800;
+	int imonth;
+	bool leap = false;
+	int iyear = stoi(year);
+	int iday = stoi(day);
+	if (toLower(month) == "january") imonth = 1;
+	else if (toLower(month) == "februar") imonth = 2;
+	else if (toLower(month) == "march") imonth = 3;
+	else if (toLower(month) == "april") imonth = 4;
+	else if (toLower(month) == "may") imonth = 5;
+	else if (toLower(month) == "june") imonth = 6;
+	else if (toLower(month) == "july") imonth = 7;
+	else if (toLower(month) == "august") imonth = 8;
+	else if (toLower(month) == "september") imonth = 9;
+	else if (toLower(month) == "october") imonth = 10;
+	else if (toLower(month) == "november") imonth = 11;
+	else if (toLower(month) == "december") imonth = 12;
+
+	if (((iyear % 4 == 0) && (iyear % 100 != 0)) || (iyear % 400 == 0)) leap = true;
+
+	if (imonth = 2) {
+		if (leap) return (iday <= 29);
+		else return (iday <= 28);
+	}
+	if (imonth == 4 || imonth == 6 || imonth == 9 || imonth == 1) return (iday <= 30);
+
+	return true;
 }
 
 void fromFile() {
@@ -145,11 +176,26 @@ void Entry(int num, string data) {
 		current->input.hash = no;
 		current->input.lastName = data;
 		cout << current->input.hash << endl;
-		
 	case 2:
+		current->input.middleInt = data;
+	case 3:
 		current->input.firstName = data;
-		cout << "\"" << data << "\" Done.\n" << endl;
+	case 4:
+		current->input.phoneNumber = data;
+	case 5:
+		current->input.MOB = data;
+	case 6:
+		current->input.DOB = data;
+	case 7:
+		current->input.YOB = data;
+	case 8:
+		current->input.hAddress = data;
+	case 9:
+		current->input.eAddress = data;
+	case 10:
+		current->input.occupation = data;
 	}
+
 
 }
 
@@ -160,7 +206,6 @@ void delFile() {
 bool alphabet(string alpha) {
 	int alphaLength = alpha.length();
 	int nameLength = current->input.lastName.length();
-	cout << current->input.lastName << endl;
 
 	if (alphaLength < nameLength) {
 		for (int i = 0; i < alphaLength; i++) {
@@ -191,14 +236,14 @@ bool alphabet(string alpha) {
 
 void Entry() {
 	ofstream outfile;
-	string abuffer;
-	string bbuffer;
+	string abuffer, bbuffer, pbuffer, dbuffer, mbuffer, ybuffer;
 	string no;
 	outfile.open("book.txt", ios::out | ios::app);
 
 	cout << "First Name: ";
 	cin >> abuffer;
 
+	cout << endl;
 
 	cout << "Last Name: ";
 	cin >> bbuffer;
@@ -240,41 +285,69 @@ void Entry() {
 	current->input.hash = no;
 	current->input.firstName = abuffer;
 	current->input.lastName = bbuffer;
+	cout << "Middle Initial: ";
+	cin >> current->input.middleInt;
 	outfile << current->input.hash << ",";
 	outfile << current->input.lastName << ",";
-	outfile << current->input.firstName << "\n";
+	outfile << current->input.middleInt << ",";
+	outfile << current->input.firstName << ",";
 
-	//cout << "Middle Initial: ";
-	//cin >> current->input.middleInt;
-	//outfile << current->input.middleInt << ",";
+	cout << endl;
+	
+	cout << "Phone Number (add area code): ";
+	cin >> pbuffer;
+	if (pbuffer.length != 10) {
+		cout << "Must be 10 digits." << endl;
+		cout << "Enter again: ";
+		cin >> pbuffer;
+	}
+	current->input.phoneNumber = pbuffer;
+	outfile << current->input.phoneNumber << ",";
 
-	//cout << "Phone Number: ";
-	//cin >> current->input.phoneNumber;
-	//outfile << current->input.phoneNumber << ",";
+	cout << endl;
 
-	//cout << "Day of Birth: ";
-	//cin >> current->input.DOB;
-	//outfile << current->input.DOB << ",";
+	bool date = false;
 
-	//cout << "Month of Birth: ";
-	//cin >> current->input.MOB;
-	//outfile << current->input.MOB << ",";
+	while (date = false) {
+		cout << "Please enter full month (May, June, July, etc)";
+		cout << "Month of Birth: ";
+		cin >> mbuffer;
 
-	//cout << "Year of Birth: ";
-	//cin >> current->input.YOB;
-	//outfile << current->input.YOB << ",";
+		cout << "Day of Birth: ";
+		cin >> dbuffer;
 
-	//cout << "Home Address: ";
-	//cin >> current->input.hAddress;
-	//outfile << current->input.hAddress << ",";
+		cout << "Year of Birth (yyyy format): ";
+		cin >> ybuffer;
+		if (ybuffer.length != 4) {
+			cout << "Please enter a valid year (4 digits)";
+			cout << "Year of Birth: ";
+			cin >> ybuffer;
+		}
+		if (isValidDate(mbuffer, dbuffer, ybuffer)) {
+			date = true;
+		}
+		else {
+			cout << "Please enter a valid date" << endl;
+		}
+	}
+	current->input.DOB = dbuffer;
+	current->input.MOB = mbuffer;
+	current->input.YOB = ybuffer;
+	outfile << current->input.DOB << ",";
+	outfile << current->input.MOB << ",";
+	outfile << current->input.YOB << ",";
 
-	//cout << "Email Adress: ";
-	//cin >> current->input.eAddress;
-	//outfile << current->input.eAddress << ",";
+	cout << "Home Address (Include spaces): ";
+	cin >> current->input.hAddress;
+	outfile << current->input.hAddress << ",";
 
-	//cout << "Occupation: ";
-	//cin >> current->input.occupation;
-	//outfile << current->input.occupation << ",";
+	cout << "Email Adress: ";
+	cin >> current->input.eAddress;
+	outfile << current->input.eAddress << ",";
+
+	cout << "Occupation: ";
+	cin >> current->input.occupation;
+	outfile << current->input.occupation << "\n";
 	outfile.close();
 }
 struct node* search(struct node* start, string hash) {
@@ -289,15 +362,24 @@ struct node* search(struct node* start, string hash) {
 void search(struct node* start, string target, int i) {
 	if (start == nullptr) return;
 	search(start->left, target, i);
-	if (toLower(target) == toLower(start->input.firstName) || toLower(target) == toLower(start->input.lastName)) {
+	
+	if (toLower(target) == toLower(start->input.firstName) || toLower(target) == toLower(start->input.lastName) || toLower(target) == start->input.phoneNumber || toLower(target) == toLower(start->input.MOB) || toLower(target) == start->input.DOB || toLower(target) == start->input.YOB || toLower(target) == toLower(start->input.hAddress) || toLower(target) == toLower(start->input.eAddress) || toLower(target) == toLower(start->input.occupation)) {
+		if (start->input.hash == "") return;
 		i++;
 		cout << i << "." << endl;
 		cout << "Hash: " << start->input.hash << endl;
 		cout << "First Name: " << start->input.firstName << endl;
+		cout << "Middle Initial: " << start->input.middleInt << endl;
 		cout << "Last Name: " << start->input.lastName << endl;
+		cout << "Phone Number: " << start->input.phoneNumber << endl;
+		cout << "Birthday: " << start->input.MOB << start->input.DOB << ", " << start->input.YOB << endl;
+		cout << "Home Address: " << start->input.hAddress << endl;
+		cout << "Email Address: " << start->input.eAddress << endl;
+		cout << "Occupation: " << start->input.occupation << endl;
 		cout << endl;
 	}
-	else if (toLower(target) != toLower(start->input.firstName) || toLower(target) != toLower(start->input.lastName)) {
+	else if (toLower(target) != toLower(start->input.firstName) || toLower(target) != toLower(start->input.lastName) || toLower(target) != start->input.phoneNumber || toLower(target) != toLower(start->input.MOB) || toLower(target) != start->input.DOB || toLower(target) != start->input.YOB || toLower(target) != toLower(start->input.hAddress) || toLower(target) != toLower(start->input.eAddress) || toLower(target) != toLower(start->input.occupation)) {
+		if (start->input.hash == "") return;
 		size_t found;
 		found = toLower(start->input.firstName).find(toLower(target));
 		if (found != string::npos) {
@@ -305,25 +387,143 @@ void search(struct node* start, string target, int i) {
 			cout << i << "." << endl;
 			cout << "Hash: " << start->input.hash << endl;
 			cout << "First Name: " << start->input.firstName << endl;
+			cout << "Middle Initial: " << start->input.middleInt << endl;
 			cout << "Last Name: " << start->input.lastName << endl;
+			cout << "Phone Number: " << start->input.phoneNumber << endl;
+			cout << "Birthday: " << start->input.MOB << start->input.DOB << ", " << start->input.YOB << endl;
+			cout << "Home Address: " << start->input.hAddress << endl;
+			cout << "Email Address: " << start->input.eAddress << endl;
+			cout << "Occupation: " << start->input.occupation << endl;
 			cout << endl;
 		}
 		else if (found == string::npos) {
 			found = toLower(start->input.lastName).find(toLower(target));
 			if (found != string::npos) {
+				if (start->input.hash == "") return;
 				i++;
 				cout << i << "." << endl;
 				cout << "Hash: " << start->input.hash << endl;
 				cout << "First Name: " << start->input.firstName << endl;
+				cout << "Middle Initial: " << start->input.middleInt << endl;
 				cout << "Last Name: " << start->input.lastName << endl;
+				cout << "Phone Number: " << start->input.phoneNumber << endl;
+				cout << "Birthday: " << start->input.MOB << start->input.DOB << ", " << start->input.YOB << endl;
+				cout << "Home Address: " << start->input.hAddress << endl;
+				cout << "Email Address: " << start->input.eAddress << endl;
+				cout << "Occupation: " << start->input.occupation << endl;
 				cout << endl;
 			}
-			/*else if (found == string::npos) {
-				cout << "Could not find person \n";
-				cout << "Type NULL" << endl;
-			}*/
+			else if (found == string::npos) {
+				found = toLower(start->input.phoneNumber).find(toLower(target));
+				if (found != string::npos) {
+					if (start->input.hash == "") return;
+					i++;
+					cout << i << "." << endl;
+					cout << "Hash: " << start->input.hash << endl;
+					cout << "First Name: " << start->input.firstName << endl;
+					cout << "Middle Initial: " << start->input.middleInt << endl;
+					cout << "Last Name: " << start->input.lastName << endl;
+					cout << "Phone Number: " << start->input.phoneNumber << endl;
+					cout << "Birthday: " << start->input.MOB << start->input.DOB << ", " << start->input.YOB << endl;
+					cout << "Home Address: " << start->input.hAddress << endl;
+					cout << "Email Address: " << start->input.eAddress << endl;
+					cout << "Occupation: " << start->input.occupation << endl;
+					cout << endl;
+				}
+				else if (found == string::npos) {
+					found = toLower(start->input.MOB).find(toLower(target));
+					if (found != string::npos) {
+						if (start->input.hash == "") return;
+						i++;
+						cout << i << "." << endl;
+						cout << "Hash: " << start->input.hash << endl;
+						cout << "First Name: " << start->input.firstName << endl;
+						cout << "Middle Initial: " << start->input.middleInt << endl;
+						cout << "Last Name: " << start->input.lastName << endl;
+						cout << "Phone Number: " << start->input.phoneNumber << endl;
+						cout << "Birthday: " << start->input.MOB << start->input.DOB << ", " << start->input.YOB << endl;
+						cout << "Home Address: " << start->input.hAddress << endl;
+						cout << "Email Address: " << start->input.eAddress << endl;
+						cout << "Occupation: " << start->input.occupation << endl;
+						cout << endl;
+					}
+					else if (found == string::npos) {
+						found = toLower(start->input.YOB).find(toLower(target));
+						if (found != string::npos) {
+							if (start->input.hash == "") return;
+							i++;
+							cout << i << "." << endl;
+							cout << "Hash: " << start->input.hash << endl;
+							cout << "First Name: " << start->input.firstName << endl;
+							cout << "Middle Initial: " << start->input.middleInt << endl;
+							cout << "Last Name: " << start->input.lastName << endl;
+							cout << "Phone Number: " << start->input.phoneNumber << endl;
+							cout << "Birthday: " << start->input.MOB << start->input.DOB << ", " << start->input.YOB << endl;
+							cout << "Home Address: " << start->input.hAddress << endl;
+							cout << "Email Address: " << start->input.eAddress << endl;
+							cout << "Occupation: " << start->input.occupation << endl;
+							cout << endl;
+						}
+						else if (found == string::npos) {
+							found = toLower(start->input.hAddress).find(toLower(target));
+							if (found != string::npos) {
+								if (start->input.hash == "") return;
+								i++;
+								cout << i << "." << endl;
+								cout << "Hash: " << start->input.hash << endl;
+								cout << "First Name: " << start->input.firstName << endl;
+								cout << "Middle Initial: " << start->input.middleInt << endl;
+								cout << "Last Name: " << start->input.lastName << endl;
+								cout << "Phone Number: " << start->input.phoneNumber << endl;
+								cout << "Birthday: " << start->input.MOB << start->input.DOB << ", " << start->input.YOB << endl;
+								cout << "Home Address: " << start->input.hAddress << endl;
+								cout << "Email Address: " << start->input.eAddress << endl;
+								cout << "Occupation: " << start->input.occupation << endl;
+								cout << endl;
+							}
+							else if (found == string::npos) {
+								found = toLower(start->input.eAddress).find(toLower(target));
+								if (found != string::npos) {
+									if (start->input.hash == "") return;
+									i++;
+									cout << i << "." << endl;
+									cout << "Hash: " << start->input.hash << endl;
+									cout << "First Name: " << start->input.firstName << endl;
+									cout << "Middle Initial: " << start->input.middleInt << endl;
+									cout << "Last Name: " << start->input.lastName << endl;
+									cout << "Phone Number: " << start->input.phoneNumber << endl;
+									cout << "Birthday: " << start->input.MOB << start->input.DOB << ", " << start->input.YOB << endl;
+									cout << "Home Address: " << start->input.hAddress << endl;
+									cout << "Email Address: " << start->input.eAddress << endl;
+									cout << "Occupation: " << start->input.occupation << endl;
+									cout << endl;
+								}
+								else if (found == string::npos) {
+									found = toLower(start->input.occupation).find(toLower(target));
+									if (found != string::npos) {
+										if (start->input.hash == "") return;
+										i++;
+										cout << i << "." << endl;
+										cout << "Hash: " << start->input.hash << endl;
+										cout << "First Name: " << start->input.firstName << endl;
+										cout << "Middle Initial: " << start->input.middleInt << endl;
+										cout << "Last Name: " << start->input.lastName << endl;
+										cout << "Phone Number: " << start->input.phoneNumber << endl;
+										cout << "Birthday: " << start->input.MOB << start->input.DOB << ", " << start->input.YOB << endl;
+										cout << "Home Address: " << start->input.hAddress << endl;
+										cout << "Email Address: " << start->input.eAddress << endl;
+										cout << "Occupation: " << start->input.occupation << endl;
+										cout << endl;
+									}
+
+								}
+							}
+						}
+					}
+				}
+			}
 		}
-		
+		if (start->input.hash == "") return;
 	}
 	search(start->right, target, i);
 }
@@ -344,7 +544,7 @@ void edit(struct node* start, string editName, string newName, int num) {
 
 		edit(start->left, editName, newName, num);
 
-	if (toLower(start->input.firstName) == toLower(editName) || toLower(start->input.lastName) == toLower(editName)) {
+	if (toLower(start->input.firstName) == toLower(editName) || toLower(start->input.lastName) == toLower(editName) || toLower(start->input.phoneNumber) == editName || toLower(start->input.middleInt) == toLower(editName) || toLower(start->input.MOB) == toLower(editName) || toLower(start->input.DOB) == toLower(editName) || toLower(start->input.YOB) == toLower(editName) || toLower(start->input.eAddress) == toLower(editName) || toLower(start->input.hAddress) == toLower(editName) || toLower(start->input.occupation) == toLower(editName)) {
 		if (num == 3) {
 			string no;
 			bcurrent = bhead;
@@ -378,14 +578,14 @@ void edit(struct node* start, string editName, string newName, int num) {
 		}
 		else {
 			if (num == 1) { start->input.firstName = newName;}
-			/*if (num == 2) {}
-			if (num == 4) {}
-			if (num == 5) {}
-			if (num == 6) {}
-			if (num == 7) {}
-			if (num == 8) {}
-			if (num == 9) {}
-			if (num == 10) {}*/
+			if (num == 2) { start->input.middleInt = newName; }
+			if (num == 4) { start->input.phoneNumber = newName; }
+			if (num == 5) { start->input.MOB = newName; }
+			if (num == 6) { start->input.DOB = newName; }
+			if (num == 7) { start->input.YOB = newName; }
+			if (num == 8) { start->input.hAddress = newName; }
+			if (num == 9) { start->input.eAddress = newName; }
+			if (num == 10) { start->input.occupation = newName; }
 		}
 	}
 	
@@ -397,11 +597,9 @@ struct node* deleteOne(struct node* start, string name) {
 
 	current = start;
 	if (alphabet(name)) {
-		cout << name << endl;
 		start->right = deleteOne(start->right, name);
 	}
 	else{
-		cout << name << endl;
 		start->left = deleteOne(start->left, name);
 	}
 
@@ -418,7 +616,15 @@ struct node* deleteOne(struct node* start, string name) {
 		}
 		struct node* temp = leastVal(start->right);
 		start->input.firstName = temp->input.firstName;
+		start->input.middleInt = temp->input.middleInt;
 		start->input.lastName = temp->input.lastName;
+		start->input.phoneNumber = temp->input.phoneNumber;
+		start->input.MOB = temp->input.MOB;
+		start->input.DOB = temp->input.DOB;
+		start->input.YOB = temp->input.YOB;
+		start->input.hAddress = temp->input.hAddress;
+		start->input.eAddress = temp->input.eAddress;
+		start->input.occupation = temp->input.occupation;
 
 		start->right = deleteOne(start->right, temp->input.lastName);
 	}
@@ -445,8 +651,9 @@ void printAll(struct node* start, int space) {
 	cout << endl;
 	for (int i = 5; i < space; i++)
 		cout << " ";
-	if (start->input.hash == "") { cout << "NULL, " << start->input.lastName << ", " << start->input.firstName << endl; }
-	else { cout << start->input.hash << ", " << start->input.lastName << ", " << start->input.firstName << endl; }
+	if (start->input.hash == "") { cout << "NULL, " << start->input.lastName << ", " << start->input.middleInt << ", " << start->input.firstName << ", " << start->input.phoneNumber << ", " << start->input.MOB << ", " << start->input.DOB << ", " << start->input.YOB << ", " << start->input.hAddress << ", " << start->input.eAddress << ", " << start->input.occupation << endl; }
+	else { cout << start->input.hash << ", " << start->input.lastName << ", " << start->input.middleInt << ", " << start->input.firstName << ", " << start->input.phoneNumber << ", " << start->input.MOB << ", " << start->input.DOB << ", " << start->input.YOB << ", " << start->input.hAddress << ", " << start->input.eAddress << ", " << start->input.occupation << endl;
+	}
 
 	printAll(start->left, space);
 }
@@ -455,8 +662,8 @@ void copyTree(struct node* start, ofstream& outfile, int n) {
 	if (start == nullptr) return;
 	
 	if (start->input.hash != "" && n == 0) {
-		cout << "Copying:" << start->input.hash << "," << start->input.lastName << "," << start->input.firstName << endl;
-		outfile << start->input.hash << "," << start->input.lastName << "," << start->input.firstName << endl;
+		cout << "Copying:" << start->input.lastName << "," << start->input.middleInt << "," << start->input.firstName << "," << start->input.phoneNumber << "," << start->input.MOB << "," << start->input.DOB << "," << start->input.YOB << "," << start->input.hAddress << "," << start->input.eAddress << "," << start->input.occupation << endl;
+		outfile << start->input.hash << "," << start->input.lastName << "," << start->input.middleInt << "," << start->input.firstName << "," << start->input.phoneNumber << "," << start->input.MOB << "," << start->input.DOB << "," << start->input.YOB << "," << start->input.hAddress << "," << start->input.eAddress << "," << start->input.occupation << endl;
 	}
 	else {
 		copyTree(start->left, outfile, n - 1);
@@ -480,8 +687,9 @@ void delTree(struct node* start) {
 
 	delTree(start->left);
 	delTree(start->right);
-	if (start->input.hash == "") { cout << "Deleting: " << "NULL, " << start->input.lastName << ", " << start->input.firstName << endl; }
-	else { cout << "Deleting: " << start->input.hash << ", " << start->input.lastName << ", " << start->input.firstName << endl; }
+	if (start->input.hash == "") { cout << "Deleting: " << "NULL, " << start->input.lastName << ", " << start->input.middleInt << ", " << start->input.firstName << ", " << start->input.phoneNumber << ", " << start->input.MOB << ", " << start->input.DOB << ", " << start->input.YOB << ", " << start->input.hAddress << ", " << start->input.eAddress << ", " << start->input.occupation << endl; }
+	else { cout << "Deleting: " << start->input.hash << ", " << start->input.lastName << ", " << start->input.middleInt << ", " << start->input.firstName << ", " << start->input.phoneNumber << ", " << start->input.MOB << ", " << start->input.DOB << ", " << start->input.YOB << ", " << start->input.hAddress << ", " << start->input.eAddress << ", " << start->input.occupation << endl;
+	}
 	
 	free(start);
 }

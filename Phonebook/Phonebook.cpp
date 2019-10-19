@@ -53,15 +53,15 @@ int main() {
 			cin >> no;
 			if (no != "NULL" || "null") {
 				cout << "1. First Name" << endl;
-				//cout << "2. Middle Initial" << endl;
+				cout << "2. Middle Initial" << endl;
 				cout << "3. Last Name" << endl;
-				//cout << "4. Phonenumber" << endl;
-				//cout << "5. Day of Birth" << endl;
-				//cout << "6. Month of Birth" << endl;
-				//cout << "7. Year of Birth" << endl;
-				//cout << "8. Home address" << endl;
-				//cout << "9. Email adress" << endl;
-				//cout << "10. Occupation" << endl;
+				cout << "4. Phonenumber" << endl;
+				cout << "5. Month of Birth" << endl;
+				cout << "6. Day of Birth" << endl;
+				cout << "7. Year of Birth" << endl;
+				cout << "8. Home address" << endl;
+				cout << "9. Email adress" << endl;
+				cout << "10. Occupation" << endl;
 				cout << "What would you like to edit (number): ";
 				cin >> num;
 				if (num == 1) {
@@ -71,8 +71,15 @@ int main() {
 					string editNode = search(head, no)->input.lastName;
 					cout << num;
 					edit(head, editNode, newName, num);
-					
-				//if (num == 2) {}
+				}
+				if (num == 2) {
+					cout << "Enter new middle initial: ";
+					string newName;
+					cin >> newName;
+					string editNode = search(head, no)->input.middleInt;
+					cout << num;
+					edit(head, editNode, newName, num);
+				}
 				if (num == 3) {
 					cout << "Enter new last name: ";
 					string newName;
@@ -88,14 +95,62 @@ int main() {
 					}
 					reHash(head);
 				}
+				if (num == 4) {
+					cout << "Enter new phone number: ";
+					string newName;
+					cin >> newName;
+					string editNode = search(head, no)->input.phoneNumber;
+					cout << num;
+					edit(head, editNode, newName, num);
 				}
-				//if (num == 4) {}
-				//if (num == 5) {}
-				//if (num == 6) {}
-				//if (num == 7) {}
-				//if (num == 8) {}
-				//if (num == 9) {}
-				//if (num == 10) {}	
+				if (num == 5) {
+					cout << "Enter new month: ";
+					string newName;
+					cin >> newName;
+					string editNode = search(head, no)->input.MOB;
+					cout << num;
+					edit(head, editNode, newName, num);
+				}
+				if (num == 6) {
+					cout << "Enter new day: ";
+					string newName;
+					cin >> newName;
+					string editNode = search(head, no)->input.DOB;
+					cout << num;
+					edit(head, editNode, newName, num);
+				}
+				if (num == 7) {
+					cout << "Enter new first name: ";
+					string newName;
+					cin >> newName;
+					string editNode = search(head, no)->input.YOB;
+					cout << num;
+					edit(head, editNode, newName, num);
+				}
+				if (num == 8) {
+					cout << "Enter new home address: ";
+					string newName;
+					cin >> newName;
+					string editNode = search(head, no)->input.hAddress;
+					cout << num;
+					edit(head, editNode, newName, num);
+				}
+				if (num == 9) {
+					cout << "Enter new email address: ";
+					string newName;
+					cin >> newName;
+					string editNode = search(head, no)->input.eAddress;
+					cout << num;
+					edit(head, editNode, newName, num);
+				}
+				if (num == 10) {
+					cout << "Enter new occupation: ";
+					string newName;
+					cin >> newName;
+					string editNode = search(head, no)->input.occupation;
+					cout << num;
+					edit(head, editNode, newName, num);
+				}
 			}
 		}
 		if (act == "4") {

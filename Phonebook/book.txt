@@ -1,13 +1,12 @@
-0,Gurley,Jack
+0,Hinkhouse,Sam
 1,Obama,Barack
 00,Emerson,Michael
-01,Hinkhouse,Sam
 10,Nixon,Richard
 11,Reaves,Keanu
 000,Beam,Max
-0011,Gulsen,Yunushan
-011,Hinkhouse,Sam
+001,Gulsen,Yunushan
 100,Night,Tuesday
 110,Obama,Barack
 111,Reaves,Keanu
 0000,Baird,Emily
+0011,Gurley,Jack
