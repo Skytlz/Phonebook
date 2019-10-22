@@ -348,17 +348,23 @@ void Entry() {
 	outfile << current->input.DOB << ",";
 	outfile << current->input.YOB << ",";
 
+	cout << endl;
+
 	cout << "Home Address (Include spaces): ";
 	//cin.ignore(1000);
 	cin.clear();
 	getline(cin, current->input.hAddress);
 	outfile << current->input.hAddress << ",";
 
+	cout << endl;
+
 	cout << "Email Adress: ";
 	//cin.ignore(1000);
 	cin.clear();
 	getline(cin, current->input.eAddress);
 	outfile << current->input.eAddress << ",";
+	
+	cout << endl;
 
 	cout << "Occupation: ";
 	//cin.ignore(1000);
@@ -612,7 +618,6 @@ void edit(struct node* start, string editName, string newName, int num) {
 			if (num == 10) { start->input.occupation = newName; }
 		}
 	}
-	free(start);
 }
 
 struct node* deleteOne(struct node* start, string name) {
