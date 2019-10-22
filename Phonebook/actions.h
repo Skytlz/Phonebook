@@ -299,7 +299,7 @@ void Entry() {
 	current->input.firstName = abuffer;
 	current->input.lastName = bbuffer;
 	cout << "Middle Initial: ";
-	cin >> current->input.middleInt;
+	getline(cin, current->input.middleInt);
 	outfile << current->input.hash << ",";
 	outfile << current->input.lastName << ",";
 	outfile << current->input.middleInt << ",";
@@ -308,7 +308,6 @@ void Entry() {
 	cout << endl;
 	
 	cout << "Phone Number (add area code): ";
-	cin.ignore();
 	getline(cin, pbuffer);
 	while (pbuffer.length() != 10) {
 		cout << "Must be 10 digits." << endl;

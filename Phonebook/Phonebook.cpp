@@ -180,10 +180,15 @@ int main() {
 		if (act == "5") { printAll(head,0);}
 
 		if (act == "6") { 
-			delTree(head);
-			delFile();
-			head = new node;
-			rootConstructor(); 
+			cout << "Are you sure?(Y/N)" << endl;
+			char yn;
+			cin >> yn;
+			if (yn == 'Y' || yn == 'y') {
+				delTree(head);
+				delFile();
+				head = new node;
+				rootConstructor();
+			}
 		}
 
 		if (act == "7") {
