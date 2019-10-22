@@ -80,6 +80,7 @@ void rootConstructor() {
 	head->input.occupation = "Man";
 }
 bool isValidDate(string month, string day, string year) {
+	if (month == "" && day == "" && year == "") return false;
 	const int maxYr = 9999;
 	const int minYr = 1800;
 	int imonth = stoi(month);
@@ -99,7 +100,7 @@ bool isValidDate(string month, string day, string year) {
 	else if (toLower(month) == "november") imonth = 11;
 	else if (toLower(month) == "december") imonth = 12;*/
 
-	if (((iyear % 4 == 0) && (iyear % 100 != 0)) || (iyear % 400 == 0)) leap = true;
+	if (iyear % 4 == 0 && iyear % 100 != 0 || iyear % 400 == 0) leap = true;
 
 	if (imonth == 2) {
 		if (leap) return (iday <= 29);
@@ -177,22 +178,31 @@ void Entry(int num, string data) {
 		current->input.lastName = data;
 		cout << current->input.hash << endl;
 	case 2:
+		if (data[0] == ',') data.erase(0, 1);
 		current->input.middleInt = data;
 	case 3:
+		if (data[0] == ',') data.erase(0, 1);
 		current->input.firstName = data;
 	case 4:
+		if (data[0] == ',') data.erase(0, 1);
 		current->input.phoneNumber = data;
 	case 5:
+		if (data[0] == ',') data.erase(0, 1);
 		current->input.MOB = data;
 	case 6:
+		if (data[0] == ',') data.erase(0, 1);
 		current->input.DOB = data;
 	case 7:
+		if (data[0] == ',') data.erase(0, 1);
 		current->input.YOB = data;
 	case 8:
+		if (data[0] == ',') data.erase(0, 1);
 		current->input.hAddress = data;
 	case 9:
+		if (data[0] == ',') data.erase(0, 1);
 		current->input.eAddress = data;
 	case 10:
+		if (data[0] == ',') data.erase(0, 1);
 		current->input.occupation = data;
 	}
 
@@ -241,15 +251,18 @@ void Entry() {
 	outfile.open("book.txt", ios::out | ios::app);
 
 	cout << "First Name: ";
-	cin >> abuffer;
+	cin.ignore();
+	getline(cin, abuffer);
 
 	cout << endl;
 
 	cout << "Last Name: ";
-	cin >> bbuffer;
+	getline(cin, bbuffer);
 
-	int rightPointers = 0;
-	int leftPointers = 0;
+	cout << endl;
+
+	//int rightPointers = 0;
+	//int leftPointers = 0;
 
 	bcurrent = bhead;
 	current = head;
@@ -261,16 +274,16 @@ void Entry() {
 			current = current->right;
 			no += '1';
 			currentMove = true;
-			rightPointers++;
-			cout << "testR" << rightPointers << endl;
+			//rightPointers++;
+			//cout << "testR" << rightPointers << endl;
 		}
 		else {
 			bcurrent = current;
 			current = current->left;
 			no += '0';
 			currentMove = false;
-			leftPointers++;
-			cout << "testL" << leftPointers << endl;
+			//leftPointers++;
+			//cout << "testL" << leftPointers << endl;
 		}
 	}
 	if (currentMove) {
@@ -295,8 +308,9 @@ void Entry() {
 	cout << endl;
 	
 	cout << "Phone Number (add area code): ";
-	cin >> pbuffer;
-	if (pbuffer.length() != 10) {
+	cin.ignore();
+	getline(cin, pbuffer);
+	while (pbuffer.length() != 10) {
 		cout << "Must be 10 digits." << endl;
 		cout << "Enter again: ";
 		cin >> pbuffer;
@@ -306,49 +320,49 @@ void Entry() {
 
 	cout << endl;
 
-	bool date = false;
-
-	while (date == false) {
-		cout << "Please enter number (1-Jan, 2-Feb, etc)";
+	while (!isValidDate(mbuffer, dbuffer, ybuffer)) {
+		cout << "Please enter number (1-Jan, 2-Feb, etc)" << endl;
 		cout << "Month of Birth: ";
-		cin >> mbuffer;
+		//cin.ignore();
+		getline(cin, mbuffer);
+
+		cout << endl;
 
 		cout << "Day of Birth: ";
-		cin >> dbuffer;
+		//cin.ignore();
+		getline(cin, dbuffer);
+
+		cout << endl;
 
 		cout << "Year of Birth (yyyy format): ";
-		cin >> ybuffer;
-		if (ybuffer.length() != 4) {
-			cout << "Please enter a valid year (4 digits)";
-			cout << "Year of Birth: ";
-			cin >> ybuffer;
-		}
-		if (isValidDate(mbuffer, dbuffer, ybuffer)) {
-			date = true;
-		}
-		else {
-			cout << "Please enter a valid date" << endl;
+		//cin.ignore();
+		getline(cin, ybuffer);
+		if (!isValidDate(mbuffer, dbuffer, ybuffer)) {
+			cout << "Please enter a valid date." << endl;
 		}
 	}
 	current->input.DOB = dbuffer;
 	current->input.MOB = mbuffer;
 	current->input.YOB = ybuffer;
-	outfile << current->input.DOB << ",";
 	outfile << current->input.MOB << ",";
+	outfile << current->input.DOB << ",";
 	outfile << current->input.YOB << ",";
 
 	cout << "Home Address (Include spaces): ";
-	//getline(cin, current->input.hAddress);
-	cin.ignore();
+	//cin.ignore(1000);
+	cin.clear();
 	getline(cin, current->input.hAddress);
 	outfile << current->input.hAddress << ",";
 
 	cout << "Email Adress: ";
-	cin >> current->input.eAddress;
+	//cin.ignore(1000);
+	cin.clear();
+	getline(cin, current->input.eAddress);
 	outfile << current->input.eAddress << ",";
 
 	cout << "Occupation: ";
-	cin.ignore();
+	//cin.ignore(1000);
+	cin.clear();
 	getline(cin, current->input.occupation);
 	outfile << current->input.occupation << "\n";
 	outfile.close();
@@ -382,7 +396,7 @@ void search(struct node* start, string target, int i) {
 		cout << endl;
 	}
 	else if (toLower(target) != toLower(start->input.firstName) || toLower(target) != toLower(start->input.lastName) || toLower(target) != start->input.phoneNumber || toLower(target) != toLower(start->input.MOB) || toLower(target) != start->input.DOB || toLower(target) != start->input.YOB || toLower(target) != toLower(start->input.hAddress) || toLower(target) != toLower(start->input.eAddress) || toLower(target) != toLower(start->input.occupation)) {
-		if (start->input.hash == "") return;
+		//if (start->input.hash == "") return;
 		size_t found;
 		found = toLower(start->input.firstName).find(toLower(target));
 		if (found != string::npos) {
@@ -402,7 +416,7 @@ void search(struct node* start, string target, int i) {
 		else if (found == string::npos) {
 			found = toLower(start->input.lastName).find(toLower(target));
 			if (found != string::npos) {
-				if (start->input.hash == "") return;
+				
 				i++;
 				cout << i << "." << endl;
 				cout << "Hash: " << start->input.hash << endl;
@@ -419,7 +433,7 @@ void search(struct node* start, string target, int i) {
 			else if (found == string::npos) {
 				found = toLower(start->input.phoneNumber).find(toLower(target));
 				if (found != string::npos) {
-					if (start->input.hash == "") return;
+					
 					i++;
 					cout << i << "." << endl;
 					cout << "Hash: " << start->input.hash << endl;
@@ -436,7 +450,7 @@ void search(struct node* start, string target, int i) {
 				else if (found == string::npos) {
 					found = toLower(start->input.MOB).find(toLower(target));
 					if (found != string::npos) {
-						if (start->input.hash == "") return;
+						
 						i++;
 						cout << i << "." << endl;
 						cout << "Hash: " << start->input.hash << endl;
@@ -453,7 +467,7 @@ void search(struct node* start, string target, int i) {
 					else if (found == string::npos) {
 						found = toLower(start->input.YOB).find(toLower(target));
 						if (found != string::npos) {
-							if (start->input.hash == "") return;
+							
 							i++;
 							cout << i << "." << endl;
 							cout << "Hash: " << start->input.hash << endl;
@@ -470,7 +484,7 @@ void search(struct node* start, string target, int i) {
 						else if (found == string::npos) {
 							found = toLower(start->input.hAddress).find(toLower(target));
 							if (found != string::npos) {
-								if (start->input.hash == "") return;
+								
 								i++;
 								cout << i << "." << endl;
 								cout << "Hash: " << start->input.hash << endl;
@@ -487,7 +501,7 @@ void search(struct node* start, string target, int i) {
 							else if (found == string::npos) {
 								found = toLower(start->input.eAddress).find(toLower(target));
 								if (found != string::npos) {
-									if (start->input.hash == "") return;
+									
 									i++;
 									cout << i << "." << endl;
 									cout << "Hash: " << start->input.hash << endl;
@@ -504,7 +518,7 @@ void search(struct node* start, string target, int i) {
 								else if (found == string::npos) {
 									found = toLower(start->input.occupation).find(toLower(target));
 									if (found != string::npos) {
-										if (start->input.hash == "") return;
+										
 										i++;
 										cout << i << "." << endl;
 										cout << "Hash: " << start->input.hash << endl;
@@ -526,7 +540,6 @@ void search(struct node* start, string target, int i) {
 				}
 			}
 		}
-		if (start->input.hash == "") return;
 	}
 	search(start->right, target, i);
 }
