@@ -73,7 +73,7 @@ void rootConstructor() {
 	head->input.lastName = "Maxton";
 	head->input.phoneNumber = "1234567890";
 	head->input.DOB = "1";
-	head->input.MOB = "January";
+	head->input.MOB = "1";
 	head->input.YOB = "1970";
 	head->input.hAddress = "123 Fake St";
 	head->input.eAddress = "johnEDoe@skytlz.com";
@@ -82,11 +82,11 @@ void rootConstructor() {
 bool isValidDate(string month, string day, string year) {
 	const int maxYr = 9999;
 	const int minYr = 1800;
-	int imonth;
+	int imonth = stoi(month);
 	bool leap = false;
 	int iyear = stoi(year);
 	int iday = stoi(day);
-	if (toLower(month) == "january") imonth = 1;
+	/*if (toLower(month) == "january") imonth = 1;
 	else if (toLower(month) == "februar") imonth = 2;
 	else if (toLower(month) == "march") imonth = 3;
 	else if (toLower(month) == "april") imonth = 4;
@@ -97,11 +97,11 @@ bool isValidDate(string month, string day, string year) {
 	else if (toLower(month) == "september") imonth = 9;
 	else if (toLower(month) == "october") imonth = 10;
 	else if (toLower(month) == "november") imonth = 11;
-	else if (toLower(month) == "december") imonth = 12;
+	else if (toLower(month) == "december") imonth = 12;*/
 
 	if (((iyear % 4 == 0) && (iyear % 100 != 0)) || (iyear % 400 == 0)) leap = true;
 
-	if (imonth = 2) {
+	if (imonth == 2) {
 		if (leap) return (iday <= 29);
 		else return (iday <= 28);
 	}
@@ -308,8 +308,8 @@ void Entry() {
 
 	bool date = false;
 
-	while (date = false) {
-		cout << "Please enter full month (May, June, July, etc)";
+	while (date == false) {
+		cout << "Please enter number (1-Jan, 2-Feb, etc)";
 		cout << "Month of Birth: ";
 		cin >> mbuffer;
 
@@ -338,7 +338,9 @@ void Entry() {
 	outfile << current->input.YOB << ",";
 
 	cout << "Home Address (Include spaces): ";
-	cin >> current->input.hAddress;
+	//getline(cin, current->input.hAddress);
+	cin.ignore();
+	getline(cin, current->input.hAddress);
 	outfile << current->input.hAddress << ",";
 
 	cout << "Email Adress: ";
@@ -346,7 +348,8 @@ void Entry() {
 	outfile << current->input.eAddress << ",";
 
 	cout << "Occupation: ";
-	cin >> current->input.occupation;
+	cin.ignore();
+	getline(cin, current->input.occupation);
 	outfile << current->input.occupation << "\n";
 	outfile.close();
 }
@@ -372,7 +375,7 @@ void search(struct node* start, string target, int i) {
 		cout << "Middle Initial: " << start->input.middleInt << endl;
 		cout << "Last Name: " << start->input.lastName << endl;
 		cout << "Phone Number: " << start->input.phoneNumber << endl;
-		cout << "Birthday: " << start->input.MOB << start->input.DOB << ", " << start->input.YOB << endl;
+		cout << "Birthday: " << start->input.MOB << "/" << start->input.DOB << "/" << start->input.YOB << endl;
 		cout << "Home Address: " << start->input.hAddress << endl;
 		cout << "Email Address: " << start->input.eAddress << endl;
 		cout << "Occupation: " << start->input.occupation << endl;
@@ -390,7 +393,7 @@ void search(struct node* start, string target, int i) {
 			cout << "Middle Initial: " << start->input.middleInt << endl;
 			cout << "Last Name: " << start->input.lastName << endl;
 			cout << "Phone Number: " << start->input.phoneNumber << endl;
-			cout << "Birthday: " << start->input.MOB << start->input.DOB << ", " << start->input.YOB << endl;
+			cout << "Birthday: " << start->input.MOB << "/" << start->input.DOB << "/" << start->input.YOB << endl;
 			cout << "Home Address: " << start->input.hAddress << endl;
 			cout << "Email Address: " << start->input.eAddress << endl;
 			cout << "Occupation: " << start->input.occupation << endl;
@@ -407,7 +410,7 @@ void search(struct node* start, string target, int i) {
 				cout << "Middle Initial: " << start->input.middleInt << endl;
 				cout << "Last Name: " << start->input.lastName << endl;
 				cout << "Phone Number: " << start->input.phoneNumber << endl;
-				cout << "Birthday: " << start->input.MOB << start->input.DOB << ", " << start->input.YOB << endl;
+				cout << "Birthday: " << start->input.MOB << "/" << start->input.DOB << "/" << start->input.YOB << endl;
 				cout << "Home Address: " << start->input.hAddress << endl;
 				cout << "Email Address: " << start->input.eAddress << endl;
 				cout << "Occupation: " << start->input.occupation << endl;
@@ -424,7 +427,7 @@ void search(struct node* start, string target, int i) {
 					cout << "Middle Initial: " << start->input.middleInt << endl;
 					cout << "Last Name: " << start->input.lastName << endl;
 					cout << "Phone Number: " << start->input.phoneNumber << endl;
-					cout << "Birthday: " << start->input.MOB << start->input.DOB << ", " << start->input.YOB << endl;
+					cout << "Birthday: " << start->input.MOB << "/" << start->input.DOB << "/" << start->input.YOB << endl;
 					cout << "Home Address: " << start->input.hAddress << endl;
 					cout << "Email Address: " << start->input.eAddress << endl;
 					cout << "Occupation: " << start->input.occupation << endl;
@@ -441,7 +444,7 @@ void search(struct node* start, string target, int i) {
 						cout << "Middle Initial: " << start->input.middleInt << endl;
 						cout << "Last Name: " << start->input.lastName << endl;
 						cout << "Phone Number: " << start->input.phoneNumber << endl;
-						cout << "Birthday: " << start->input.MOB << start->input.DOB << ", " << start->input.YOB << endl;
+						cout << "Birthday: " << start->input.MOB << "/" << start->input.DOB << "/" << start->input.YOB << endl;
 						cout << "Home Address: " << start->input.hAddress << endl;
 						cout << "Email Address: " << start->input.eAddress << endl;
 						cout << "Occupation: " << start->input.occupation << endl;
@@ -458,7 +461,7 @@ void search(struct node* start, string target, int i) {
 							cout << "Middle Initial: " << start->input.middleInt << endl;
 							cout << "Last Name: " << start->input.lastName << endl;
 							cout << "Phone Number: " << start->input.phoneNumber << endl;
-							cout << "Birthday: " << start->input.MOB << start->input.DOB << ", " << start->input.YOB << endl;
+							cout << "Birthday: " << start->input.MOB << "/" << start->input.DOB << "/" << start->input.YOB << endl;
 							cout << "Home Address: " << start->input.hAddress << endl;
 							cout << "Email Address: " << start->input.eAddress << endl;
 							cout << "Occupation: " << start->input.occupation << endl;
@@ -475,7 +478,7 @@ void search(struct node* start, string target, int i) {
 								cout << "Middle Initial: " << start->input.middleInt << endl;
 								cout << "Last Name: " << start->input.lastName << endl;
 								cout << "Phone Number: " << start->input.phoneNumber << endl;
-								cout << "Birthday: " << start->input.MOB << start->input.DOB << ", " << start->input.YOB << endl;
+								cout << "Birthday: " << start->input.MOB << "/" << start->input.DOB << "/" << start->input.YOB << endl;
 								cout << "Home Address: " << start->input.hAddress << endl;
 								cout << "Email Address: " << start->input.eAddress << endl;
 								cout << "Occupation: " << start->input.occupation << endl;
@@ -492,7 +495,7 @@ void search(struct node* start, string target, int i) {
 									cout << "Middle Initial: " << start->input.middleInt << endl;
 									cout << "Last Name: " << start->input.lastName << endl;
 									cout << "Phone Number: " << start->input.phoneNumber << endl;
-									cout << "Birthday: " << start->input.MOB << start->input.DOB << ", " << start->input.YOB << endl;
+									cout << "Birthday: " << start->input.MOB << "/" << start->input.DOB << "/" << start->input.YOB << endl;
 									cout << "Home Address: " << start->input.hAddress << endl;
 									cout << "Email Address: " << start->input.eAddress << endl;
 									cout << "Occupation: " << start->input.occupation << endl;
@@ -509,7 +512,7 @@ void search(struct node* start, string target, int i) {
 										cout << "Middle Initial: " << start->input.middleInt << endl;
 										cout << "Last Name: " << start->input.lastName << endl;
 										cout << "Phone Number: " << start->input.phoneNumber << endl;
-										cout << "Birthday: " << start->input.MOB << start->input.DOB << ", " << start->input.YOB << endl;
+										cout << "Birthday: " << start->input.MOB << "/" << start->input.DOB << "/" << start->input.YOB << endl;
 										cout << "Home Address: " << start->input.hAddress << endl;
 										cout << "Email Address: " << start->input.eAddress << endl;
 										cout << "Occupation: " << start->input.occupation << endl;
@@ -573,6 +576,14 @@ void edit(struct node* start, string editName, string newName, int num) {
 				current = bcurrent->left;
 			}
 			current->input.firstName = start->input.firstName;
+			current->input.phoneNumber = start->input.phoneNumber;
+			current->input.middleInt = start->input.middleInt;
+			current->input.MOB = start->input.MOB;
+			current->input.DOB = start->input.DOB;
+			current->input.YOB = start->input.YOB;
+			current->input.hAddress = start->input.hAddress;
+			current->input.eAddress = start->input.eAddress;
+			current->input.occupation = start->input.occupation;
 			current->input.lastName = newName;
 			current->input.hash = no;
 		}
@@ -588,7 +599,7 @@ void edit(struct node* start, string editName, string newName, int num) {
 			if (num == 10) { start->input.occupation = newName; }
 		}
 	}
-	
+	free(start);
 }
 
 struct node* deleteOne(struct node* start, string name) {
