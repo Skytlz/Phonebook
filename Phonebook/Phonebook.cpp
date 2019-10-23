@@ -1,5 +1,5 @@
 ﻿// Phonebook.cpp: Main
-//
+// Copyright 2019 Jack Gurley
 
 #pragma once
 #include "stdafx.h"

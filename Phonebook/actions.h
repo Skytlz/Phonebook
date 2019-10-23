@@ -1,4 +1,5 @@
-//actions.h: Actions
+// actions.h: Actions
+// Copyright 2019 Jack Gurley
 
 #pragma once
 #include <iostream>
